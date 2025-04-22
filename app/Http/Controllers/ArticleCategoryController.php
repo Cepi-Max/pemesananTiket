@@ -32,23 +32,23 @@ class ArticleCategoryController extends Controller
         $referer = $request->headers->get('referer');
 
         // Redirect kembali ke referer dengan pesan sukses
-        return redirect($referer)->with('success', 'Kategori artikel berhasil ditambahkan.');
+        return redirect($referer)->with('success', 'Kategori informasi berhasil ditambahkan.');
 
     }
 
     public function delete(Request $request, $slug): RedirectResponse
     {
         try {
-            // Cari kategori artikel berdasarkan slug
+            // Cari kategori informasi berdasarkan slug
             $articleCategoryBySlug = ArticleCategory::where('slug', $slug)->firstOrFail();
     
-            // Hapus kategori artikel
+            // Hapus kategori informasi
             $articleCategoryBySlug->delete();
     
-            return redirect()->back()->with('success', 'Kategori artikel berhasil dihapus.');
+            return redirect()->back()->with('success', 'Kategori informasi berhasil dihapus.');
         } catch (QueryException $e) {
             // Jika terjadi error karena constraint foreign key
-            return redirect()->back()->with('error', 'Gagal menghapus kategori artikel karena masih digunakan di tabel lain.');
+            return redirect()->back()->with('error', 'Gagal menghapus kategori informasi karena masih digunakan di tabel lain.');
         } catch (\Exception $e) {
             // Menangani error lain
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
