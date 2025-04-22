@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Article;
+use App\Models\ArticleCategory;
+use App\Models\Gallery;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,5 +21,22 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $this->call(ArticleCategorySeeder::class);
+        $this->call(ArticleCategorySeeder::class);
+        $this->call(DashboardBannerSeeder::class);
+        $this->call(AboutUsSeeder::class);
+        $this->call(DownloadFileSeeder::class);
+
+        Article::factory(20)->recycle([
+            ArticleCategory::all(),
+            User::all()
+            ])->create();
+
+        Gallery::factory(20)->recycle([
+            User::all()
+            ])->create();
+
+
+        }
     }
-}
