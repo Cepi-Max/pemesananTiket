@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ArticleCategoryController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,6 +18,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+    // Artikel Admin 
+    Route::get('/admin/info-list', [ArticleController::class, 'index'])->name('show.article');
+    Route::get('/admin/info-form/{slug?}', [ArticleController::class, 'form'])->name('show.article.form');
+    Route::post('/admin/info-save', [ArticleController::class, 'save'])->name('article.save');
+    Route::post('/admin/info-update/{slug}', [ArticleController::class, 'update'])->name('article.update');
+    Route::delete('/admin/info-delete/{slug}', [ArticleController::class, 'delete'])->name('article.delete');
+    // Articles Categories
+    Route::post('/admin/info-categories/save', [ArticleCategoryController::class, 'save'])->name('article.category.save');
+    Route::post('/admin/info-categories/update/{slug}', [ArticleCategoryController::class, 'update'])->name('article.category.update');
+    Route::delete('/admin/info-categories/{slug}', [ArticleCategoryController::class, 'delete'])->name('article.category.delete');
 });
 
 require __DIR__.'/auth.php';

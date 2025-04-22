@@ -19,16 +19,16 @@ class ArticleController extends Controller
 
         // Mengambil semua data article dari database
         $data = [
-            'title' => 'Daftar artikel',
+            'title' => 'Daftar Informasi',
             'articles' => $articles
             
         ];
 
         // Mengirim data posts ke view 'index'
-        return view('admin/article/index', $data);
+        return view('admin.article.index', $data);
     }
 
-    public function articleForm($slug = null)
+    public function form($slug = null)
     {
         $articleBySlug = $slug ? Article::where('slug', $slug)->firstOrFail() : null;
         $categories = ArticleCategory::all();
@@ -39,7 +39,7 @@ class ArticleController extends Controller
             'articleBySlug' => $articleBySlug,
         ];
 
-        return view('admin/article/form', $data);
+        return view('admin.article/form', $data);
     }
 
 
@@ -75,7 +75,7 @@ class ArticleController extends Controller
          if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $file = $request->file('image'); 
             $fileName = now()->format('Y-m-d_H-i-s') . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-            $path   = 'images/publicImg/article/articleImg/'.$fileName;
+            $path   = 'images/infoImg/'.$fileName;
             Storage::disk('public')->put($path, file_get_contents($file));
          } else {
              $fileName = 'default.png';
@@ -107,7 +107,7 @@ class ArticleController extends Controller
 
 
         // Redirect dengan pesan sukses
-        return redirect()->route('show.articles')->with('success', 'Data Berhasil Ditambahkan.');
+        return redirect()->route('show.article')->with('success', 'Data Berhasil Ditambahkan.');
     }
 
 
@@ -172,11 +172,11 @@ class ArticleController extends Controller
 
             // Buat nama file unik
             $fileName = now()->format('Y-m-d_H-i-s') . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-            $path = 'images/publicImg/article/articleImg/' . $fileName;
+            $path = 'images/infoImg/' . $fileName;
 
             // Hapus gambar lama jika bukan default.png
             if ($articleBySlug->image && $articleBySlug->image !== 'default.png') {
-                Storage::disk('public')->delete('images/publicImg/article/articleImg/' . $articleBySlug->image);
+                Storage::disk('public')->delete('images/infoImg/' . $articleBySlug->image);
             }
 
             // Simpan gambar baru
@@ -191,7 +191,7 @@ class ArticleController extends Controller
  
         $articleBySlug->save();
 
-        return redirect()->route('show.articles')->with('success', 'Artikel berhasil diperbarui!');
+        return redirect()->route('show.article')->with('success', 'Data berhasil diperbarui.');
     }
 
     public function delete($slug)
@@ -208,7 +208,7 @@ class ArticleController extends Controller
             }
 
             if (!empty($articleBySlug->image) && $articleBySlug->image !== 'default.png') {
-                $filePath = 'images/publicImg/article/articleImg/' . $articleBySlug->image;
+                $filePath = 'images/infoImg/' . $articleBySlug->image;
                 Storage::disk('public')->delete($filePath);
             }
 
@@ -221,7 +221,7 @@ class ArticleController extends Controller
         //     return response()->json(['message' => 'Terjadi kesalahan saat menghapus artikel.'], 500);
         // }
 
-        return redirect()->route('show.articles')->with('success', 'Artikel berhasil dihapus!');
+        return redirect()->route('show.article')->with('success', 'Artikel berhasil dihapus!');
     }
 
 
