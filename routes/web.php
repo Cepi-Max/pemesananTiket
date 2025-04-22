@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
@@ -31,6 +32,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/info-categories/save', [ArticleCategoryController::class, 'save'])->name('article.category.save');
     Route::post('/admin/info-categories/update/{slug}', [ArticleCategoryController::class, 'update'])->name('article.category.update');
     Route::delete('/admin/info-categories/{slug}', [ArticleCategoryController::class, 'delete'])->name('article.category.delete');
+
+    //Profile
+    Route::get('/admin/about-us', [AboutUsController::class, 'index'])->name('show.profile');
+    Route::get('/admin/about-us-form/{id?}', [AboutUsController::class, 'index'])->name('AboutUs.form');
+    Route::put('/admin/about-us-update/{id}', [AboutUsController::class, 'update'])->name('AboutUs.update');
 });
 
 require __DIR__.'/auth.php';
