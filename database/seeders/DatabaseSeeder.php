@@ -31,12 +31,6 @@ class DatabaseSeeder extends Seeder
         Article::factory(20)->recycle([
             ArticleCategory::all(),
             User::all()
-            ])->create();
-
-        Gallery::factory(20)->recycle([
-            User::all()
-            ])->create();
-
-
-        }
+        ])->create();
     }
+}

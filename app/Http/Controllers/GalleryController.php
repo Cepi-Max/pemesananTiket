@@ -23,6 +23,14 @@ class GalleryController extends Controller
         return view('admin/gallery/index', $data);
     }
 
+    public function home()
+    {
+        // Mengambil data galeri dari database
+        $galleries = Gallery::all();
+
+        return view('homepage', compact('galleries'));
+    }
+
     public function create()
     {
         $data = [
@@ -42,11 +50,10 @@ class GalleryController extends Controller
         ]);
 
         // Tangani Gambar
-        if($request->hasFile('image') && $request->file('image')->isValid())
-        {
-            $file = $request->file('image'); 
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file = $request->file('image');
             $fileName = now()->format('Y-m-d_H-i-s') . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-            $path   = 'images/publicImg/gallery/galleryImg/'.$fileName;
+            $path   = 'images/publicImg/gallery/galleryImg/' . $fileName;
             Storage::disk('public')->put($path, file_get_contents($file));
         } else {
             $fileName = 'default.png';
@@ -54,7 +61,7 @@ class GalleryController extends Controller
 
         $author_id = Auth::id();
 
-        $gallery = New Gallery;
+        $gallery = new Gallery;
 
         $gallery->id;
         $gallery->author_id = $author_id;
@@ -68,10 +75,10 @@ class GalleryController extends Controller
 
     public function deleteSelected(Request $request)
     {
-    // dd('hello deleted');
+        // dd('hello deleted');
         // Ambil ID yang dicentang
         $ids = $request->input('delete_ids');
-        
+
         if ($ids && is_array($ids)) {
             // Ambil data galeri berdasarkan ID yang dipilih
             $galleries = Gallery::whereIn('id', $ids)->get();
@@ -86,11 +93,10 @@ class GalleryController extends Controller
 
             // Hapus data dari database
             Gallery::whereIn('id', $ids)->delete();
-            
+
             return redirect()->route('show.galleries')->with('success', 'Gambar yang dipilih berhasil dihapus.');
         } else {
             return redirect()->route('show.galleries')->with('message', 'Tidak ada data yang dipilih.');
         }
     }
-
 }
