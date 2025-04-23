@@ -13,7 +13,7 @@ use App\Http\Controllers\HomeController;
 //     return view('homepage');
 // });
 
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/home', [HomeController::class, 'home']);
 
 
 Route::get('/', function () {

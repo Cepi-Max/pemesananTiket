@@ -60,16 +60,16 @@
           </a>
         </li> --}}
 
-
-        <li class="nav-item mt-3">
-          <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
-        </li>
         <li class="nav-item">
           <a class="nav-link text-dark" {{ request()->routeIs('show.profile'. '*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('show.profile') }}">
             <i class="material-symbols-rounded opacity-5">person</i>
-            <span class="nav-link-text ms-1 ">Profile</span>
+            <span class="nav-link-text ms-1 ">About US</span>
           </a>
         </li>
+{{-- 
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
+        </li> --}}
         {{-- <li class="nav-item">
           <a class="nav-link text-dark" href="../pages/sign-in.html">
             <i class="material-symbols-rounded opacity-5">login</i>
