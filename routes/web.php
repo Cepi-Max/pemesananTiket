@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\ArticleCategoryController;
-use App\Http\Controllers\DownloadAbleFileController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DownloadAbleFileController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+
 
 
 // Route::get('/', function () {
@@ -16,7 +18,7 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'home']);
 
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
@@ -29,6 +31,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Main Page
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/admin/banner-setting', [DashboardController::class, 'bannerSettingForm'])->name('banner.setting');
+     // Web settings
+     Route::get('/admin/setting', [DashboardController::class, 'bannerSettingForm'])->name('show.bannerSettingForm');
+     Route::post('/admin/setting/save', [DashboardController::class, 'bannerSettingSave'])->name('bannerSettingSave');
+     Route::post('/admin/setting/update/{id}', [DashboardController::class, 'bannerSettingUpdate'])->name('bannerSettingUpdate');
+ 
     // Artikel Admin 
     Route::get('/admin/info-list', [ArticleController::class, 'index'])->name('show.article');
     Route::get('/admin/info-form/{slug?}', [ArticleController::class, 'form'])->name('show.article.form');

@@ -11,6 +11,12 @@
 
       <ul class="navbar-nav">
         <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('dashboard'. '*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('dashboard') }}">
+            <i class="material-symbols-rounded opacity-5">dashboard</i>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('show.article'. '*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('show.article') }}">
             <i class="material-symbols-rounded opacity-5">info</i>
             <span class="nav-link-text ms-1">Info</span>

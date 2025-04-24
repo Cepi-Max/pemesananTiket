@@ -19,9 +19,9 @@
       <div class="card-body w-auto pt-sm-3 pt-0">
         <ul class="navbar-nav">
           <li class="nav-item">
-            {{-- <a class="nav-link rounded m-auto {{ request()->routeIs('show.bannerSettingForm') ? 'active border-bottom text-dark' : 'text-dark' }}" href="{{ route('show.bannerSettingForm') }}">
+            <a class="nav-link rounded m-auto {{ request()->routeIs('show.bannerSettingForm') ? 'active border-bottom text-dark' : 'text-dark' }}" href="{{ route('show.bannerSettingForm') }}">
               <span class="nav-link-text ms-1">Banner</span>
-            </a> --}}
+            </a>
           </li>
         </ul>
       </div>
