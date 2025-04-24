@@ -7,6 +7,14 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownloadAbleFileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\KotaController;
+use App\Http\Controllers\KelasPesawatController;
+use App\Http\Controllers\MaskapaiController;
+use App\Http\Controllers\PromoController;
+use App\Http\Controllers\PesawatController;
+use App\Http\Controllers\PenerbanganController;
+use App\Http\Controllers\PesanTiketController;
+use App\Http\Controllers\DetailPenumpangController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -58,6 +66,23 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/file-update/{slug}', [DownloadAbleFileController::class, 'update'])->name('downloadfile.update');
     Route::get('/admin/{fileDownload}/preview', [DownloadAbleFileController::class, 'previewFile'])->name('downloadfile.preview');
     Route::get('/admin/{fileDownload}/download', [DownloadAbleFileController::class, 'downloadFile'])->name('downloadfile.download');
+    // Routing untuk operasi CRUD Kota
+    Route::resource('kota', KotaController::class);
+    // Routing untuk operasi CRUD Kelas Pesawat
+    Route::resource('kelas_pesawat', KelasPesawatController::class);
+    // Routing untuk operasi CRUD Maskapai
+    Route::resource('maskapai', MaskapaiController::class);
+    // Routing untuk operasi CRUD Promo
+    Route::resource('promo', PromoController::class);
+    // Routing untuk operasi CRUD Pesawat
+    Route::resource('pesawat', PesawatController::class);
+    // Routing untuk operasi CRUD Penerbangan
+    Route::resource('penerbangan', PenerbanganController::class);
+    // Routing untuk operasi CRUD Pesan Tiket
+    Route::resource('pesan_tiket', PesanTiketController::class);
+    // Routing untuk operasi CRUD Detail Penumpang dalam setiap pesanan tiket
+    Route::resource('pesan_tiket/{pesanTiketId}/penumpang', DetailPenumpangController::class);
+
 });
 
 require __DIR__ . '/auth.php';
