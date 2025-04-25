@@ -66,22 +66,23 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/file-update/{slug}', [DownloadAbleFileController::class, 'update'])->name('downloadfile.update');
     Route::get('/admin/{fileDownload}/preview', [DownloadAbleFileController::class, 'previewFile'])->name('downloadfile.preview');
     Route::get('/admin/{fileDownload}/download', [DownloadAbleFileController::class, 'downloadFile'])->name('downloadfile.download');
+    
     // Routing untuk operasi CRUD Kota
-    Route::resource('kota', KotaController::class);
+    Route::resource('/admin/kota', KotaController::class);
     // Routing untuk operasi CRUD Kelas Pesawat
-    Route::resource('kelas_pesawat', KelasPesawatController::class);
+    Route::resource('/admin/kelas_pesawat', KelasPesawatController::class);
     // Routing untuk operasi CRUD Maskapai
-    Route::resource('maskapai', MaskapaiController::class);
+    Route::resource('/admin/maskapai', MaskapaiController::class);
     // Routing untuk operasi CRUD Promo
-    Route::resource('promo', PromoController::class);
+    Route::resource('/admin/promo', PromoController::class);
     // Routing untuk operasi CRUD Pesawat
-    Route::resource('pesawat', PesawatController::class);
+    Route::resource('/admin/pesawat', PesawatController::class);
     // Routing untuk operasi CRUD Penerbangan
-    Route::resource('penerbangan', PenerbanganController::class);
+    Route::resource('/admin/penerbangan', PenerbanganController::class);
     // Routing untuk operasi CRUD Pesan Tiket
-    Route::resource('pesan_tiket', PesanTiketController::class);
+    Route::resource('/admin/pesan_tiket', PesanTiketController::class);
     // Routing untuk operasi CRUD Detail Penumpang dalam setiap pesanan tiket
-    Route::resource('pesan_tiket/{pesanTiketId}/penumpang', DetailPenumpangController::class);
+    Route::resource('/admin/pesan_tiket/{pesanTiketId}/penumpang', DetailPenumpangController::class);
 
 });
 

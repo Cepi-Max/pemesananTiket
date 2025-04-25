@@ -9,9 +9,24 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
+
+
 Route::middleware('guest')->group(function () {
+
+    // postman login tester {
+    Route::post('/test-login', function (Request $request) {
+        dd('Hai');
+        if (Auth::attempt($request->only('email', 'password'))) {
+            return response()->json(['message' => 'Login Berhasil']);
+        }
+        return response()->json(['message' => 'Login Gagal'], 401);
+    });
+    // }
+
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 

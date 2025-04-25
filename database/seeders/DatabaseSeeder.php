@@ -27,6 +27,15 @@ class DatabaseSeeder extends Seeder
         $this->call(DashboardBannerSeeder::class);
         $this->call(AboutUsSeeder::class);
         $this->call(DownloadFileSeeder::class);
+        $this->call(MaskapaiSeeder::class);
+        $this->call(KotaSeeder::class);
+        $this->call(KelasPesawatSeeder::class);
+        $this->call(PesawatSeeder::class);
+        $this->call(BandaraSeeder::class);
+        $this->call(PenerbanganSeeder::class);
+        $this->call(PesanTiketSeeder::class);
+        $this->call(DetailPenumpangSeeder::class);
+        $this->call(PromoSeeder::class);
 
         Article::factory(20)->recycle([
             ArticleCategory::all(),
