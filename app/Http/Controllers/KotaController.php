@@ -4,20 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Kota;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class KotaController extends Controller
 {
     // Menampilkan semua kota
     public function index()
     {
-        $kotas = Kota::all(); // Ambil semua data kota dari database
-        return view('kota.index', compact('kota')); // Kirim data kota ke view
+        $kota = Kota::all(); // Ambil semua data kota dari database
+
+        $data = [
+            'title' => 'Daftar Kota',
+            'kota' => $kota
+        ];
+
+        return view('kota.index', $data); 
     }
 
     // Menampilkan form tambah kota
     public function create()
     {
-        return view('kota.create'); // Menampilkan form untuk menambah kota
+
+        $data = [
+            'title' => 'Form Tambah Kota',
+        ];
+
+        return view('kota.create', $data); // Menampilkan form untuk menambah kota
     }
 
     // Menyimpan kota ke database
@@ -25,15 +37,25 @@ class KotaController extends Controller
     {
         // Validasi data input
         $request->validate([
-            'slug' => 'required|unique:kota',
             'nama_kota' => 'required',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
+        ], [
+            'nama_kota.required' => 'nama kota harus diisi.',
+            'latitude.required' => 'lokasi pada peta harus diisi.',
+            'longitude.required' => 'lokasi pada peta harus diisi.',
         ]);
-
+        
+        // Buat Slug itu otomatis Fadil
+        $slug = Str::slug($request->input('nama_kota'));
+        // klo ada nama kota yg sama tambahin angka biar beda
+        $existingSlugCount = Kota::where('slug', 'LIKE', "{$slug}%")->count();
+        if ($existingSlugCount > 0) {
+            $slug .= '-' . ($existingSlugCount + 1);
+        }
         // Simpan data kota ke database
         Kota::create([
-            'slug' => $request->slug,
+            'slug' => $slug,
             'nama_kota' => $request->nama_kota,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
@@ -44,26 +66,37 @@ class KotaController extends Controller
     }
 
     // Menampilkan form edit kota
-    public function edit($id)
+    public function edit($slug)
     {
-        $kota = Kota::findOrFail($id); // Ambil data kota berdasarkan ID
-        return view('kota.edit', compact('kota')); // Kirim data kota ke form edit
+        $kota = Kota::findOrFail($slug); // Ambil data kota berdasarkan slug
+
+        $data = [
+            'title' => 'Form Edit Kota',
+            'kota' => $kota
+        ];
+
+        return view('kota.edit', $data); // Kirim data kota ke form edit
     }
 
     // Menyimpan perubahan kota
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
         // Validasi data input
         $request->validate([
-            'slug' => 'required|unique:kota,slug,' . $id,
             'nama_kota' => 'required',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
+        ], [
+            'nama_kota.required' => 'nama kota harus diisi.',
+            'latitude.required' => 'lokasi pada peta harus diisi.',
+            'longitude.required' => 'lokasi pada peta harus diisi.',
         ]);
 
-        $kota = Kota::findOrFail($id); // Ambil data kota berdasarkan ID
+        $kota = Kota::findOrFail($slug); // Ambil data kota berdasarkan slug
+
+        $slug = Str::slug($request->input('nama_kota'));
         $kota->update([
-            'slug' => $request->slug,
+            'slug' => $slug,
             'nama_kota' => $request->nama_kota,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
@@ -74,9 +107,9 @@ class KotaController extends Controller
     }
 
     // Menghapus kota
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $kota = Kota::findOrFail($id); // Ambil data kota berdasarkan ID
+        $kota = Kota::findOrFail($slug); // Ambil data kota berdasarkan slug
         $kota->delete(); // Hapus data kota
 
         // Redirect ke halaman index dengan pesan sukses
