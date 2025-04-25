@@ -50,13 +50,11 @@ class ArticleController extends Controller
             'title' => 'required',
             'body' => 'required',
             'category' => 'required',
-            'inovator' => 'required',
             'image' => 'nullable|image|max:2560', // File harus berupa gambar dengan ukuran maksimal 2.5MB
         ], [
             'title.required' => 'Judul harus diisi.',
             'body.required' => 'Isi artikel harus diisi.',
             'category.required' => 'Kategori artikel harus diisi.',
-            'inovator.required' => 'Penulis harus diisi.',
             'image.image' => 'File harus berupa gambar.',
             'image.max' => 'Ukuran gambar tidak boleh lebih dari 2,5 MB.',
         ]);
@@ -99,7 +97,6 @@ class ArticleController extends Controller
         $article->body = $newBody;
         $article->article_category_id = $request->input('category');
         $article->author_id = $author_id;
-        $article->inovator = $validatedData['inovator'];
         $article->seen = 0;
         $article->image = $fileName;
 
@@ -117,13 +114,11 @@ class ArticleController extends Controller
             'title' => 'required',
             'body' => 'required',
             'category' => 'required',
-            'inovator' => 'required',
             'image' => 'nullable|image|max:2560', // File harus berupa gambar dengan ukuran maksimal 2.5MB
         ], [
             'title.required' => 'Judul harus diisi.',
             'body.required' => 'Isi artikel harus diisi.',
             'category.required' => 'Kategori artikel harus diisi.',
-            'inovator.required' => 'Penulis harus diisi.',
             'image.image' => 'File harus berupa gambar.',
             'image.max' => 'Ukuran gambar tidak boleh lebih dari 2,5 MB.',
         ]);
@@ -163,7 +158,6 @@ class ArticleController extends Controller
         $articleBySlug->body =  $newBody;
         $articleBySlug->article_category_id = $request->input('category');
         $articleBySlug->author_id = $author_id;
-        $articleBySlug->inovator = $validatedData['inovator'];
         $articleBySlug->seen = 0;
 
         // Tangani file gambar

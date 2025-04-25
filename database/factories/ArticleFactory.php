@@ -22,7 +22,6 @@ class ArticleFactory extends Factory
             'author_id' => User::factory(),
             'article_category_id' => ArticleCategory::factory(),
             'body' => fake()->text(),
-            'inovator' => fake()->name(),
             'seen' => 0,
             'image' =>'default.jpg',
         ];

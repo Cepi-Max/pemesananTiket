@@ -1,18 +1,7 @@
 @extends('admin.layouts.main.app')
 
 @section('content')  
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+            
             <div class="form-container">
                 <div class="form-title d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
                     <span>Form {{ $articleBySlug ? 'Ubah' : 'Tambah' }} Informasi</span>
@@ -53,14 +42,6 @@
 
                         </div>
                         <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="inovator" class="form-label">Nama Penulis</label>
-                                <input type="text" class="form-control @error('inovator') is-invalid @enderror" id="inovator" name="inovator" value="{{ old('inovator', $articleBySlug->inovator ?? '') }} " placeholder="Masukkan Nama Penulis">
-                            </div>
-                            @error('inovator')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-
                             <div class="mb-3">
                                 <label for="category" class="form-label">Kategori</label>
                                 <select name="category" id="category" class="form-control custom-select @error('category') is-invalid @enderror">

@@ -40,8 +40,7 @@
                                 @if ($articles->isNotEmpty())
                                     <tr>
                                         <th style="width: 5%">No</th>
-                                        <th style="width: 25%">Judul</th>
-                                        <th style="width: 12%">Penulis</th>
+                                        <th style="width: 37%">Judul</th>
                                         <th style="width: 15%">Kategori</th>
                                         <th style="width: 15%">Tgl. Posting</th>
                                         <th style="width: 12%">Admin</th>
@@ -55,11 +54,6 @@
                                     <tr>
                                         <td class="align-middle"><?= $i++; ?></td>
                                         <td class="align-middle"><b>{{ \Illuminate\Support\Str::limit($article->title, 30) }}</b></td>
-                                        <td class="align-middle">
-                                            <a href="/admin/info-list?author={{ $article->inovator }}">
-                                                {{ $article->inovator }}
-                                            </a>
-                                        </td>
                                         <td class="align-middle bg-{{ $article->article_category->color }}">
                                             <a href="/admin/info-list?category={{ $article->article_category->slug }}">
                                                 @if (isset($article->article_category->name))

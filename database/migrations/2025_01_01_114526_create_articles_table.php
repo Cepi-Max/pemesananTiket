@@ -23,7 +23,6 @@ return new class extends Migration
                 table: 'article_categories',
                 indexName: 'article_category_id' 
             );
-            $table->string('inovator');
             $table->longText('body');
             $table->string('image');
             $table->integer('seen')->default(0);;

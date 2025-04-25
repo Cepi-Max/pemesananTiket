@@ -12,7 +12,7 @@ class Article extends Model
 
     use HasFactory;
 
-    protected $fillable = ['slug', 'title', 'body', 'image', 'inovator', 'seen'];
+    protected $fillable = ['slug', 'title', 'body', 'image', 'seen'];
     protected $with = ['author', 'article_category'];
 
     public function author(): BelongsTo
@@ -40,11 +40,6 @@ class Article extends Model
         $query->when($filter['admin'] ?? false, 
         fn($query, $author)=>
             $query->whereHas('author', fn($query)=>$query->where('name', $author))
-        );
-
-        $query->when($filter['author'] ?? false, 
-            fn($query, $inovator) =>
-                $query->where('inovator', $inovator)
         );
     }
 

@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(ArticleCategorySeeder::class);
-        $this->call(ArticleCategorySeeder::class);
         $this->call(DashboardBannerSeeder::class);
         $this->call(AboutUsSeeder::class);
         $this->call(DownloadFileSeeder::class);
