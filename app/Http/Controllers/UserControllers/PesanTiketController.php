@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\UserControllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\PesanTiket;
 use App\Models\Penerbangan;
 use App\Models\User;

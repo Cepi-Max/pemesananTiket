@@ -12,8 +12,8 @@ use App\Http\Controllers\MaskapaiController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\PesawatController;
 use App\Http\Controllers\PenerbanganController;
-use App\Http\Controllers\PesanTiketController;
 use App\Http\Controllers\DetailPenumpangController;
+use App\Http\Controllers\UserControllers\PesanTiketController;
 use App\Http\Controllers\UserControllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
