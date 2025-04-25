@@ -5,7 +5,6 @@ use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownloadAbleFileController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KotaController;
 use App\Http\Controllers\KelasPesawatController;
@@ -15,13 +14,12 @@ use App\Http\Controllers\PesawatController;
 use App\Http\Controllers\PenerbanganController;
 use App\Http\Controllers\PesanTiketController;
 use App\Http\Controllers\DetailPenumpangController;
+use App\Http\Controllers\UserControllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 
 
-// Route::get('/', function () {
-//     return view('homepage');
-// });
+Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::get('/home', [HomeController::class, 'home']);
 

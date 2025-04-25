@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\UserControllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use App\Models\DashboardImage;
 use Illuminate\Http\Request;
