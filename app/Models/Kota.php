@@ -22,4 +22,9 @@ class Kota extends Model
 
     // Tentukan kolom yang tidak boleh diisi
     protected $guarded = [];
+
+    public function bandaras()
+    {
+        return $this->hasMany(Bandara::class, 'id_kota'); // Kota hasMany Bandara
+    }
 }

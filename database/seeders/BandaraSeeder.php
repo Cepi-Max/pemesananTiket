@@ -2,34 +2,33 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class BandaraSeeder extends Seeder
 {
     public function run(): void
     {
+        // Ambil id kota dari tabel kota berdasarkan nama kota yang ada
+        $kotaId = DB::table('kota')->where('nama_kota', 'Jakarta')->first()->id; // Misalnya kita cari kota Jakarta
+
         $bandara = [
             [
                 'nama_bandara' => 'Soekarno-Hatta International Airport',
-                'latitude' => -6.1255560,
-                'longitude' => 106.6558330,
+                'id_kota' => $kotaId,
             ],
             [
                 'nama_bandara' => 'Ngurah Rai International Airport',
-                'latitude' => -8.7481690,
-                'longitude' => 115.1673430,
+                'id_kota' => $kotaId,  // Kota ini juga Jakarta
             ],
             [
                 'nama_bandara' => 'Juanda International Airport',
-                'latitude' => -7.3798030,
-                'longitude' => 112.7875600,
+                'id_kota' => $kotaId,
             ],
             [
                 'nama_bandara' => 'Sultan Hasanuddin International Airport',
-                'latitude' => -5.0615900,
-                'longitude' => 119.5539300,
+                'id_kota' => $kotaId,
             ],
         ];
 
@@ -37,8 +36,7 @@ class BandaraSeeder extends Seeder
             DB::table('bandara')->insert([
                 'slug' => Str::slug($item['nama_bandara']) . '-' . Str::random(5),
                 'nama_bandara' => $item['nama_bandara'],
-                'latitude' => $item['latitude'],
-                'longitude' => $item['longitude'],
+                'id_kota' => $item['id_kota'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

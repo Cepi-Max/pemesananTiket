@@ -46,4 +46,9 @@ class Bandara extends Model
     {
         return $this->hasMany(PesanTiket::class, 'id_bandara_tujuan');
     }
+
+    public function kota()
+    {
+        return $this->belongsTo(Kota::class, 'id_kota'); // Bandara belongsTo Kota
+    }
 }

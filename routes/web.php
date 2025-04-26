@@ -4,18 +4,23 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DownloadAbleFileController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\KotaController;
-use App\Http\Controllers\KelasPesawatController;
-use App\Http\Controllers\MaskapaiController;
-use App\Http\Controllers\PromoController;
-use App\Http\Controllers\PesawatController;
-use App\Http\Controllers\PenerbanganController;
 use App\Http\Controllers\DetailPenumpangController;
-use App\Http\Controllers\UserControllers\PesanTiketController;
+use App\Http\Controllers\DownloadAbleFileController;
+use App\Http\Controllers\KelasPesawatController;
+use App\Http\Controllers\KotaController;
+use App\Http\Controllers\MaskapaiController;
+use App\Http\Controllers\PenerbanganController;
+use App\Http\Controllers\PesawatController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PromoController;
 use App\Http\Controllers\UserControllers\HomeController;
+use App\Http\Controllers\UserControllers\PesanTiketController;
+use App\Http\Controllers\UserControllers\UserPenerbanganController;
+use App\Models\Bandara;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -31,6 +36,11 @@ Route::get('/welcome', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('guest')->group(function () {
+    // Route Pencarian penerbangan di user
+});
+Route::get('/penerbangan/search', [UserPenerbanganController::class, 'search'])->name('penerbangan.search');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -83,5 +93,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('/admin/pesan_tiket/{pesanTiketId}/penumpang', DetailPenumpangController::class);
 
 });
+
+// Jangan dihapus, ini untuk ambil data bandara keperluan fitur search penerbangan
+// web.php
+Route::get('/bandara/autocomplete', [UserPenerbanganController::class, 'autocomplete'])->name('bandara.autocomplete');
+
 
 require __DIR__ . '/auth.php';

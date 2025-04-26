@@ -10,6 +10,12 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- jQuery (needed for jQuery UI) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 
 <body class="bg-white text-gray-800 font-sans">
@@ -52,39 +58,40 @@
     {{-- Form --}}
     <section class="-mt-20 px-4 mb-20">
         <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 text-gray-800">
-            <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form action="{{ route('penerbangan.search') }}" method="GET" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @csrf
                 <div class="relative">
-                    <input type="text" placeholder="Bandara Asal" class="border p-3 rounded w-full pl-10" />
+                    <input type="text" name="bandara_asal" id="bandara_asal" placeholder="Bandara Asal" class="border p-3 rounded w-full pl-10" />
                     <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
                         <i class="material-icons">flight_takeoff</i>
                     </span>
+                    <div id="bandara-asal-results" class="absolute bg-white border rounded w-full mt-1 hidden"></div>
                 </div>
                 <div class="relative">
-                    <input type="text" placeholder="Bandara Tujuan" class="border p-3 rounded w-full pl-10" />
+                    <input type="text" name="bandara_tujuan" id="bandara_tujuan" placeholder="Bandara Tujuan" class="border p-3 rounded w-full pl-10" />
                     <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
                         <i class="material-icons">flight_land</i>
                     </span>
+                    <div id="bandara-tujuan-results" class="absolute bg-white border rounded w-full mt-1 hidden"></div>
                 </div>
                 <div class="relative">
-                    <input type="date" class="border p-3 rounded w-full pl-10" />
+                    <input type="date" name="tanggal" class="border p-3 rounded w-full pl-10" />
                     <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
                         <i class="material-icons">calendar_today</i>
                     </span>
                 </div>
                 <div class="relative">
-                    <input type="number" placeholder="Jumlah Penumpang" class="border p-3 rounded w-full pl-10" />
+                    <input type="number" name="jumlah_penumpang" placeholder="Jumlah Penumpang" class="border p-3 rounded w-full pl-10" />
                     <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
                         <i class="material-icons">people</i>
                     </span>
                 </div>
-                <button class="md:col-span-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded">
+                <button type="submit" class="md:col-span-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded">
                     Cari Tiket
                 </button>
-            </form>
+            </form>                
         </div>
     </section>
-
-
 
     <section class="py-10 my-10">
         <div class="max-w-6xl mx-auto px-4">
@@ -109,8 +116,6 @@
             </div>
         </div>
     </section>
-
-
 
     <section class="py-10 bg-gray-900 my-10  ">
         <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row gap-8">
@@ -157,12 +162,6 @@
             </div>
         </div>
     </section>
-
-
-
-
-
-
 
     <section class="py-10 my-8 w-full">
         <div class="w-full">
@@ -211,7 +210,6 @@
             </div>
         </div>
     </section>
-
 
     <!-- Keunggulan -->
     <section class="bg-gray-50 py-16">
@@ -295,5 +293,115 @@
         </div>
     </footer>
 </body>
+
+<script>
+    $(document).ready(function () {
+    // Pencarian Bandara Asal
+    $('#bandara_asal').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '{{ route('bandara.autocomplete') }}',
+                data: { term: request.term },
+                success: function (data) {
+                        console.log(data); // debug dulu bro
+                        if (data.length) {
+                            response($.map(data, function (item) {
+                                return {
+                                    labelNull: "",
+                                    label: item.nama_bandara,
+                                    kota: item.kota,
+                                    value: item.nama_bandara,
+                                    id: item.id,
+                                };
+                            }));
+                        } else {
+                            response([
+                                {
+                                    labelNull: "tidak terdeteksi bro 😢",
+                                    label: "",
+                                    kota: "",
+                                    value: "",
+                                    id: null,
+                                }
+                            ]);
+                        }
+                    }
+                });
+            },
+        minLength: 2,
+        select: function (event, ui) {
+            $('#bandara_asal').val(ui.item.value);
+            $('#bandara_asal_id').val(ui.item.id); // kalau mau simpan ID
+            return false;
+        }
+    }).autocomplete("instance")._renderItem = function (ul, item) {
+        return $("<li class='border-b p-2 hover:bg-gray-100 cursor-pointer'>")
+            .append(`
+                <div class="flex flex-col">
+                    <span class="font-semibold text-gray-800">${item.label}</span>
+                    <span class="text-sm text-gray-500">${item.kota}</span>
+                    <span class="italic text-gray-600">${item.labelNull}</span>
+                </div>
+            `)
+            .appendTo(ul);
+    };
+
+
+    // Pencarian Bandara Tujuan
+    $('#bandara_tujuan').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '{{ route('bandara.autocomplete') }}',
+                data: { term: request.term },
+                success: function (data) {
+                        console.log(data); // debug dulu bro
+                        if (data.length) {
+                            response($.map(data, function (item) {
+                                return {
+                                    labelNull: "",
+                                    label: item.nama_bandara,
+                                    kota: item.kota,
+                                    value: item.nama_bandara,
+                                    id: item.id,
+                                };
+                            }));
+                        } else {
+                            response([
+                                {
+                                    labelNull: "tidak terdeteksi bro 😢",
+                                    label: "",
+                                    kota: "",
+                                    value: "",
+                                    id: null,
+                                }
+                            ]);
+                        }
+                    }
+                });
+            },
+        minLength: 2,
+        select: function (event, ui) {
+            $('#bandara_tujuan').val(ui.item.value);
+            $('#bandara_tujuan_id').val(ui.item.id); // kalau mau simpan ID
+            return false;
+        }
+        }).autocomplete("instance")._renderItem = function (ul, item) {
+        return $("<li class='border-b p-2 hover:bg-gray-100 cursor-pointer'>")
+            .append(`
+                <div class="flex flex-col">
+                    <span class="font-semibold text-gray-800">${item.label}</span>
+                    <span class="text-sm text-gray-500">${item.kota}</span>
+                    <span class="italic text-gray-600">${item.labelNull}</span>
+                </div>
+            `)
+            .appendTo(ul);
+    };
+    });
+
+    // Untuk menampilkan hasil auto-complete
+    $('#bandara_asal, #bandara_tujuan').on('focus', function () {
+        $(this).autocomplete("search", ""); // Agar langsung menampilkan data jika input fokus
+    });
+</script>
 
 </html>
