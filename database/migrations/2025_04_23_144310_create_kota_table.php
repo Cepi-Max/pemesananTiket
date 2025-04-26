@@ -17,8 +17,8 @@ class CreateKotaTable extends Migration
             $table->id();
             $table->string('slug')->unique(); // Kolom untuk slug
             $table->string('nama_kota'); // Kolom untuk nama kota
-            $table->decimal('latitude', 10, 7); // Kolom untuk latitude
-            $table->decimal('longitude', 10, 7); // Kolom untuk longitude
+            // $table->decimal('latitude', 10, 7); // Kolom untuk latitude
+            // $table->decimal('longitude', 10, 7); // Kolom untuk longitude
             $table->timestamps();
         });
     }
