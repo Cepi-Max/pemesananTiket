@@ -28,6 +28,13 @@
             <span class="nav-link-text ms-1">File Download</span>
           </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('admin.kota.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.kota.index') }}">
+            <i class="material-symbols-rounded opacity-5">picture_as_pdf</i>
+            <span class="nav-link-text ms-1">Daftar Kota</span>
+          </a>
+        </li>
+        
         {{-- <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('show.populations') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('show.populations') }}">
             <i class="material-symbols-rounded opacity-5">groups</i>

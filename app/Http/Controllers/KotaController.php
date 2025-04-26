@@ -18,7 +18,7 @@ class KotaController extends Controller
             'kota' => $kota
         ];
 
-        return view('kota.index', $data); 
+        return view('admin.kota.index', $data); 
     }
 
     // Menampilkan form tambah kota
@@ -29,7 +29,7 @@ class KotaController extends Controller
             'title' => 'Form Tambah Kota',
         ];
 
-        return view('kota.create', $data); // Menampilkan form untuk menambah kota
+        return view('admin.kota.create', $data); // Menampilkan form untuk menambah kota
     }
 
     // Menyimpan kota ke database
@@ -62,7 +62,7 @@ class KotaController extends Controller
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('kota.index')->with('success', 'Kota berhasil ditambahkan.');
+        return redirect()->route('admin.kota.index')->with('success', 'Kota berhasil ditambahkan.');
     }
 
     // Menampilkan form edit kota
@@ -75,7 +75,7 @@ class KotaController extends Controller
             'kota' => $kota
         ];
 
-        return view('kota.edit', $data); // Kirim data kota ke form edit
+        return view('admin.kota.edit', $data); // Kirim data kota ke form edit
     }
 
     // Menyimpan perubahan kota
@@ -103,7 +103,7 @@ class KotaController extends Controller
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('kota.index')->with('success', 'Kota berhasil diperbarui.');
+        return redirect()->route('admin.kota.index')->with('success', 'Kota berhasil diperbarui.');
     }
 
     // Menghapus kota
@@ -113,6 +113,6 @@ class KotaController extends Controller
         $kota->delete(); // Hapus data kota
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('kota.index')->with('success', 'Kota berhasil dihapus.');
+        return redirect()->route('admin.kota.index')->with('success', 'Kota berhasil dihapus.');
     }
 }

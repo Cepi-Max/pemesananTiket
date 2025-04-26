@@ -76,7 +76,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/{fileDownload}/download', [DownloadAbleFileController::class, 'downloadFile'])->name('downloadfile.download');
     
     // Routing untuk operasi CRUD Kota
-    Route::resource('/admin/kota', KotaController::class);
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('kota', KotaController::class)->parameters([
+            'kota' => 'slug'  // Gunakan 'slug' sebagai parameter dalam URL
+        ]);
+    });
+    
     // Routing untuk operasi CRUD Kelas Pesawat
     Route::resource('/admin/kelas_pesawat', KelasPesawatController::class);
     // Routing untuk operasi CRUD Maskapai
@@ -100,3 +105,6 @@ Route::get('/bandara/autocomplete', [UserPenerbanganController::class, 'autocomp
 
 
 require __DIR__ . '/auth.php';
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('kota', KotaController::class);
+});
