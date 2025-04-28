@@ -17,16 +17,27 @@ class UserPenerbanganController extends Controller
         $tanggal = $request->input('tanggal');
         $jumlahPenumpang = $request->input('jumlah_penumpang');
 
+        // Membangun query secara bertahap
         $penerbangan = Penerbangan::with(['bandaraAsal', 'bandaraTujuan'])
-            ->whereHas('bandaraAsal', function($query) use ($bandaraAsal) {
-                $query->where('nama_bandara', 'like', "%$bandaraAsal%");
+            // Cek jika bandara asal diberikan
+            ->when($bandaraAsal, function($query) use ($bandaraAsal) {
+                return $query->whereHas('bandaraAsal', function($query) use ($bandaraAsal) {
+                    $query->where('nama_bandara', 'like', "%$bandaraAsal%");
+                });
             })
-            ->whereHas('bandaraTujuan', function($query) use ($bandaraTujuan) {
-                $query->where('nama_bandara', 'like', "%$bandaraTujuan%");
+            // Cek jika bandara tujuan diberikan
+            ->when($bandaraTujuan, function($query) use ($bandaraTujuan) {
+                return $query->whereHas('bandaraTujuan', function($query) use ($bandaraTujuan) {
+                    $query->where('nama_bandara', 'like', "%$bandaraTujuan%");
+                });
             })
-            ->whereDate('tanggal_berangkat', $tanggal)
+            // Cek jika tanggal keberangkatan diberikan
+            ->when($tanggal, function($query) use ($tanggal) {
+                return $query->whereDate('tanggal_berangkat', $tanggal);
+            })
             ->get();
 
+        // Data yang akan dikirim ke view
         $data = [
             'title' => 'Daftar Penerbangan',
             'penerbangan' => $penerbangan,
@@ -34,6 +45,7 @@ class UserPenerbanganController extends Controller
 
         return view('daftar-penerbangan', $data);
     }
+
 
     public function autocomplete(Request $request)
     {
