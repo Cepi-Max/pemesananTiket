@@ -15,7 +15,7 @@ class UserPenerbanganController extends Controller
         $bandaraAsal = $request->input('bandara_asal');
         $bandaraTujuan = $request->input('bandara_tujuan');
         $tanggal = $request->input('tanggal');
-        $kelas = $request->input('kelas');
+        $namaKelas = $request->input('namaKelas');
         $jumlahPenumpang = $request->input('jumlah_penumpang');
 
         // Membangun query secara bertahap
@@ -36,9 +36,9 @@ class UserPenerbanganController extends Controller
             ->when($tanggal, function($query) use ($tanggal) {
                 return $query->whereDate('tanggal_berangkat', $tanggal);
             })
-            ->when($kelas, function($query) use ($kelas) {
-                return $query->whereHas('kelas', function($query) use ($kelas) {
-                    $query->where('nama_kelas', 'like', "%$kelas%");
+            ->when($namaKelas, function($query) use ($namaKelas) {
+                $query->whereHas('pesawat.kelas', function($query) use ($namaKelas) {
+                    $query->where('nama_kelas', 'like', "%$namaKelas%");
                 });
             })
             ->get();
