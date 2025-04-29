@@ -49,7 +49,7 @@ class UserPenerbanganController extends Controller
             'penerbangan' => $penerbangan,
         ];
 
-        return view('daftar-penerbangan', $data);
+        return view('user-pages.daftar-penerbangan', $data);
     }
 
 
@@ -85,7 +85,7 @@ class UserPenerbanganController extends Controller
             'penerbangan' => $penerbangan,
         ];
 
-        return view('homepage', $data);
+        return view('user-pages.homepage', $data);
     }
 
 }

@@ -18,6 +18,6 @@ class HomeController extends Controller
         $dashboardImages = DashboardImage::all(); // Ambil gambar pertama (sesuaikan jika ada lebih dari satu)
 
         // Mengirim data galeri dan gambar ke view 'homepage'
-        return view('homepage', compact('galleries', 'dashboardImages'));
+        return view('user-pages.homepage', compact('galleries', 'dashboardImages'));
     }
 }

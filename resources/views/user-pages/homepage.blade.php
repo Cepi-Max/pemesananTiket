@@ -77,7 +77,7 @@
                 <div class="relative">
                     <input type="text" name="namaKelas" id="namaKelas" placeholder="kelas" class="border p-3 rounded w-full pl-10" />
                     <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                        <i class="material-icons">document</i>
+                        <i class="material-icons">flight_class</i>
                     </span>
                     <div id="bandara-tujuan-results" class="absolute bg-white border rounded w-full mt-1 hidden"></div>
                 </div>
