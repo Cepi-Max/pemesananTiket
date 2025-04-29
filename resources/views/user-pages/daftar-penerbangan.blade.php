@@ -54,6 +54,7 @@
                         <p>Kota Asal: {{ $item->bandaraAsal->kota->nama_kota }}</p>
                         <p>Kota Tujuan: {{ $item->bandaraTujuan->kota->nama_kota }}</p>
                         <p>Tanggal Berangkat: {{ $item->tanggal_berangkat }}</p>
+                        <p>Kelas: {{ $item->pesawat->kelas->nama_kelas }}</p>
                         <p>Harga: Rp {{ number_format($item->harga_dewasa) }}</p>
                         <p>Sisa Kursi: {{ $item->maks_penumpang }}</p>
                     </div>
