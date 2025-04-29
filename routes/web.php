@@ -1,18 +1,18 @@
 <?php
 
-use App\Http\Controllers\AboutUsController;
-use App\Http\Controllers\ArticleCategoryController;
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DetailPenumpangController;
-use App\Http\Controllers\DownloadAbleFileController;
-use App\Http\Controllers\KelasPesawatController;
-use App\Http\Controllers\KotaController;
-use App\Http\Controllers\MaskapaiController;
-use App\Http\Controllers\PenerbanganController;
-use App\Http\Controllers\PesawatController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PromoController;
+use App\Http\Controllers\AdminController\AboutUsController;
+use App\Http\Controllers\AdminController\ArticleCategoryController;
+use App\Http\Controllers\AdminController\ArticleController;
+use App\Http\Controllers\AdminController\DashboardController;
+use App\Http\Controllers\AdminController\DetailPenumpangController;
+use App\Http\Controllers\AdminController\DownloadAbleFileController;
+use App\Http\Controllers\AdminController\KelasPesawatController;
+use App\Http\Controllers\AdminController\KotaController;
+use App\Http\Controllers\AdminController\MaskapaiController;
+use App\Http\Controllers\AdminController\PenerbanganController;
+use App\Http\Controllers\AdminController\PesawatController;
+use App\Http\Controllers\AdminController\PromoController;
+use App\Http\Controllers\AdminController\ProfileController;
 use App\Http\Controllers\UserControllers\HomeController;
 use App\Http\Controllers\UserControllers\PesanTiketController;
 use App\Http\Controllers\UserControllers\UserPenerbanganController;

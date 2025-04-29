@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
 use App\Models\Maskapai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class MaskapaiController extends Controller
 {
     // Menampilkan semua maskapai
     public function index()
     {
-        $maskapis = Maskapai::all(); // Ambil semua data maskapai dari database
-        return view('maskapai.index', compact('maskapai')); // Kirim data maskapai ke view
+        $maskapai = Maskapai::all(); // Ambil semua data maskapai
+
+        return view('maskapai.index', compact('maskapai'));
     }
 
     // Menampilkan form tambah maskapai
@@ -26,61 +27,63 @@ class MaskapaiController extends Controller
     {
         // Validasi data input
         $request->validate([
-            'slug' => 'required|unique:maskapai',
-            'nama_maskapai' => 'required',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'nama_maskapai' => 'required|string|max:255',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Menyimpan logo jika ada
-        $logoPath = null;
+        // Menyimpan logo ke public/storage dan mendapatkan path
         if ($request->hasFile('logo')) {
             $logoPath = $request->file('logo')->store('logos', 'public');
+        } else {
+            $logoPath = 'default.jpg';
+        }
+
+        // Membuat slug dari nama maskapai
+        $slug = Str::slug($request->nama_maskapai);
+        $existingSlugCount = Maskapai::where('slug', 'LIKE', "{$slug}%")->count();
+        if ($existingSlugCount > 0) {
+            $slug .= '-' . ($existingSlugCount + 1);
         }
 
         // Simpan data maskapai ke database
         Maskapai::create([
-            'slug' => $request->slug,
+            'slug' => $slug,
             'nama_maskapai' => $request->nama_maskapai,
-            'logo' => $logoPath ?? 'default.jpg', // Gunakan logo default jika tidak ada logo yang diupload
+            'logo' => $logoPath,
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('maskapai.index')->with('success', 'Maskapai berhasil ditambahkan.');
     }
 
-    // Menampilkan form edit maskapai
-    public function edit($id)
+    // Menampilkan form edit maskapai berdasarkan slug
+    public function edit($slug)
     {
-        $maskapai = Maskapai::findOrFail($id); // Ambil data maskapai berdasarkan ID
+        $maskapai = Maskapai::where('slug', $slug)->firstOrFail(); // Ambil data maskapai berdasarkan slug
+
         return view('maskapai.edit', compact('maskapai')); // Kirim data maskapai ke form edit
     }
 
-    // Menyimpan perubahan maskapai
-    public function update(Request $request, $id)
+    // Menyimpan perubahan maskapai berdasarkan slug
+    public function update(Request $request, $slug)
     {
         // Validasi data input
         $request->validate([
-            'slug' => 'required|unique:maskapai,slug,' . $id,
-            'nama_maskapai' => 'required',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'nama_maskapai' => 'required|string|max:255',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $maskapai = Maskapai::findOrFail($id); // Ambil data maskapai berdasarkan ID
+        $maskapai = Maskapai::where('slug', $slug)->firstOrFail(); // Ambil data maskapai berdasarkan slug
 
         // Menyimpan logo baru jika ada
-        $logoPath = $maskapai->logo;
         if ($request->hasFile('logo')) {
-            // Hapus logo lama
-            if ($logoPath && $logoPath !== 'default.jpg') {
-                Storage::delete('public/' . $logoPath);
-            }
-            // Upload logo baru
             $logoPath = $request->file('logo')->store('logos', 'public');
+        } else {
+            $logoPath = $maskapai->logo;
         }
 
         // Update data maskapai
         $maskapai->update([
-            'slug' => $request->slug,
             'nama_maskapai' => $request->nama_maskapai,
             'logo' => $logoPath,
         ]);
@@ -89,18 +92,11 @@ class MaskapaiController extends Controller
         return redirect()->route('maskapai.index')->with('success', 'Maskapai berhasil diperbarui.');
     }
 
-    // Menghapus maskapai
-    public function destroy($id)
+    // Menghapus maskapai berdasarkan slug
+    public function destroy($slug)
     {
-        $maskapai = Maskapai::findOrFail($id); // Ambil data maskapai berdasarkan ID
-
-        // Hapus logo jika ada dan bukan default
-        if ($maskapai->logo && $maskapai->logo !== 'default.jpg') {
-            Storage::delete('public/' . $maskapai->logo);
-        }
-
-        // Hapus data maskapai
-        $maskapai->delete();
+        $maskapai = Maskapai::where('slug', $slug)->firstOrFail(); // Ambil data maskapai berdasarkan slug
+        $maskapai->delete(); // Hapus data maskapai
 
         // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('maskapai.index')->with('success', 'Maskapai berhasil dihapus.');

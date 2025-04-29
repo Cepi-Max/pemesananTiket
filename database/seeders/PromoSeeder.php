@@ -3,44 +3,45 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Promo;
 use Illuminate\Support\Str;
 
 class PromoSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        $promoList = [
+        // Data promo dummy
+        $promoData = [
             [
-                'kode_promo' => 'HEMAT5',
-                'jumlah_persen' => 5,
-                'jumlah_rp' => null,
+                'kode_promo' => 'PROMO1',
+                'diskon' => 10,
+                'deskripsi' => 'Diskon 10% untuk pembelian pertama',
             ],
             [
-                'kode_promo' => 'DISKON200K',
-                'jumlah_persen' => null,
-                'jumlah_rp' => 200000,
+                'kode_promo' => 'PROMO2',
+                'diskon' => 20,
+                'deskripsi' => 'Diskon 20% untuk produk tertentu',
             ],
             [
-                'kode_promo' => 'SUPER10',
-                'jumlah_persen' => 10,
-                'jumlah_rp' => null,
-            ],
-            [
-                'kode_promo' => 'CASHBACK50K',
-                'jumlah_persen' => null,
-                'jumlah_rp' => 50000,
+                'kode_promo' => 'PROMO3',
+                'diskon' => 30,
+                'deskripsi' => 'Diskon 30% untuk pembelian lebih dari 3 produk',
             ],
         ];
 
-        foreach ($promoList as $promo) {
-            DB::table('promo')->insert([
-                'slug' => Str::slug($promo['kode_promo']) . '-' . Str::random(5),
-                'kode_promo' => $promo['kode_promo'],
-                'jumlah_%' => $promo['jumlah_persen'],
-                'jumlah_rp' => $promo['jumlah_rp'],
-                'created_at' => now(),
-                'updated_at' => now(),
+        foreach ($promoData as $data) {
+            // Membuat slug
+            $slug = Str::slug($data['kode_promo']);
+            $existingSlugCount = Promo::where('slug', 'LIKE', "{$slug}%")->count();
+            if ($existingSlugCount > 0) {
+                $slug .= '-' . ($existingSlugCount + 1);
+            }
+
+            Promo::create([
+                'slug' => $slug,
+                'kode_promo' => $data['kode_promo'],
+                'diskon' => $data['diskon'],
+                'deskripsi' => $data['deskripsi'],
             ]);
         }
     }

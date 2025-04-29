@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\AdminController;
+use App\Http\Controllers\Controller;
 use App\Models\Kota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;

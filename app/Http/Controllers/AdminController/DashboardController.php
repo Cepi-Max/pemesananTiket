@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\AdminController;
+use App\Http\Controllers\Controller;
 use App\Models\DashboardImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

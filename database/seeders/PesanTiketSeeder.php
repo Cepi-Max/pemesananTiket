@@ -4,28 +4,53 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\PesanTiket;
+use Illuminate\Support\Str;
 
 class PesanTiketSeeder extends Seeder
 {
-    /**
-     * Jalankan seeder.
-     *
-     * @return void
-     */
     public function run()
     {
-        PesanTiket::create([
-            'kode_booking' => 'BOOK123',
-            'id_orderer' => 1, // ID User yang memesan
-            'id_penerbangan' => 1, // ID Penerbangan
-            'tanggal_berangkat' => '2025-05-01',
-            'tanggal_tiba' => '2025-05-01',
-            'jam_berangkat' => '10:00:00',
-            'id_bandara_asal' => 1, // ID Bandara Soekarno-Hatta (misalnya)
-            'id_bandara_tujuan' => 2, // ID Bandara Juanda Surabaya (misalnya)
-            'id_pesawat' => 1, // ID Pesawat Garuda Indonesia A330
-            'total_harga' => 3000000.00,
-            'status' => 'Booked',
-        ]);
+        // Data pesanan tiket dummy
+        $pesanTiketData = [
+            [
+                'kode_pesanan' => 'PT001',
+                'nama_pemesan' => 'John Doe',
+                'jumlah_tiket' => 2,
+                'jadwal_penerbangan' => '2025-06-01 09:00:00',
+                'total_harga' => 500000,
+            ],
+            [
+                'kode_pesanan' => 'PT002',
+                'nama_pemesan' => 'Jane Smith',
+                'jumlah_tiket' => 1,
+                'jadwal_penerbangan' => '2025-06-02 15:00:00',
+                'total_harga' => 250000,
+            ],
+            [
+                'kode_pesanan' => 'PT003',
+                'nama_pemesan' => 'Michael Johnson',
+                'jumlah_tiket' => 3,
+                'jadwal_penerbangan' => '2025-06-03 12:00:00',
+                'total_harga' => 750000,
+            ],
+        ];
+
+        foreach ($pesanTiketData as $data) {
+            // Membuat slug
+            $slug = Str::slug($data['kode_pesanan']);
+            $existingSlugCount = PesanTiket::where('slug', 'LIKE', "{$slug}%")->count();
+            if ($existingSlugCount > 0) {
+                $slug .= '-' . ($existingSlugCount + 1);
+            }
+
+            PesanTiket::create([
+                'slug' => $slug,
+                'kode_pesanan' => $data['kode_pesanan'],
+                'nama_pemesan' => $data['nama_pemesan'],
+                'jumlah_tiket' => $data['jumlah_tiket'],
+                'jadwal_penerbangan' => $data['jadwal_penerbangan'],
+                'total_harga' => $data['total_harga'],
+            ]);
+        }
     }
 }

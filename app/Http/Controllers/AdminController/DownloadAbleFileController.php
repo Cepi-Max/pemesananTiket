@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\AdminController;
+use App\Http\Controllers\Controller;
 
 use App\Models\DownloadAbleFile;
 use Illuminate\Http\Request;

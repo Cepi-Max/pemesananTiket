@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\AdminController;
+use App\Http\Controllers\Controller;
 
 use App\Models\Gallery;
 use Illuminate\Support\Str;

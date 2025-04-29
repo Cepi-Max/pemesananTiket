@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\AdminController;
+use App\Http\Controllers\Controller;
 use DomDocument;
 use App\Models\Article;
 use App\Models\ArticleCategory;
