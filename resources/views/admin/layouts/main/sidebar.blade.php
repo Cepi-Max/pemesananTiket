@@ -34,6 +34,44 @@
             <span class="nav-link-text ms-1">Daftar Kota</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('kelas_pesawat.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('kelas_pesawat.index') }}">
+            <i class="material-symbols-rounded opacity-5">flight_class</i>
+            <span class="nav-link-text ms-1">Kelas Pesawat</span>
+          </a>
+        </li>
+        <!-- Maskapai -->
+        {{-- <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.maskapai.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.maskapai.index') }}">
+              <i class="material-symbols-rounded opacity-5">airplane_ticket</i>
+              <span class="nav-link-text ms-1">Maskapai</span>
+          </a>
+      </li> --}}
+      
+
+          <!-- Promo -->
+          {{-- <li class="nav-item">
+              <a class="nav-link {{ request()->routeIs('admin.promo.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.promo.index') }}">
+                  <i class="material-symbols-rounded opacity-5">local_offer</i>
+                  <span class="nav-link-text ms-1">Promo</span>
+              </a>
+          </li> --}}
+
+          <!-- Penerbangan -->
+          {{-- <li class="nav-item">
+              <a class="nav-link {{ request()->routeIs('admin.penerbangan.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.penerbangan.index') }}">
+                  <i class="material-symbols-rounded opacity-5">flight</i>
+                  <span class="nav-link-text ms-1">Penerbangan</span>
+              </a>
+          </li> --}}
+
+          <!-- Bandara -->
+          {{-- <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('admin.bandara.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.bandara.index') }}">
+                <i class="material-symbols-rounded opacity-5">airport_shuttle</i>
+                <span class="nav-link-text ms-1">Bandara</span>
+            </a>
+        </li> --}}
         
         {{-- <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('show.populations') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('show.populations') }}">

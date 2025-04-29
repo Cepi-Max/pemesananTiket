@@ -12,13 +12,13 @@ class MaskapaiController extends Controller
     public function index()
     {
         $maskapis = Maskapai::all(); // Ambil semua data maskapai dari database
-        return view('maskapai.index', compact('maskapai')); // Kirim data maskapai ke view
+        return view('admin.maskapai.index', compact('maskapis')); // Kirim data maskapai ke view
     }
 
     // Menampilkan form tambah maskapai
     public function create()
     {
-        return view('maskapai.create'); // Menampilkan form untuk menambah maskapai
+        return view('admin.maskapai.create'); // Menampilkan form untuk menambah maskapai
     }
 
     // Menyimpan maskapai ke database
@@ -45,14 +45,14 @@ class MaskapaiController extends Controller
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('maskapai.index')->with('success', 'Maskapai berhasil ditambahkan.');
+        return redirect()->route('admin.maskapai.index')->with('success', 'Maskapai berhasil ditambahkan.');
     }
 
     // Menampilkan form edit maskapai
     public function edit($id)
     {
         $maskapai = Maskapai::findOrFail($id); // Ambil data maskapai berdasarkan ID
-        return view('maskapai.edit', compact('maskapai')); // Kirim data maskapai ke form edit
+        return view('admin.maskapai.edit', compact('maskapai')); // Kirim data maskapai ke form edit
     }
 
     // Menyimpan perubahan maskapai
@@ -86,7 +86,7 @@ class MaskapaiController extends Controller
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('maskapai.index')->with('success', 'Maskapai berhasil diperbarui.');
+        return redirect()->route('admin.maskapai.index')->with('success', 'Maskapai berhasil diperbarui.');
     }
 
     // Menghapus maskapai
@@ -103,6 +103,6 @@ class MaskapaiController extends Controller
         $maskapai->delete();
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('maskapai.index')->with('success', 'Maskapai berhasil dihapus.');
+        return redirect()->route('admin.maskapai.index')->with('success', 'Maskapai berhasil dihapus.');
     }
 }
