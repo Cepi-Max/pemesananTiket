@@ -59,7 +59,6 @@
     <section class="-mt-20 px-4 mb-20">
         <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 text-gray-800">
             <form action="{{ route('penerbangan.search') }}" method="GET" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                @csrf
                 <div class="relative">
                     <input type="text" name="bandara_asal" id="bandara_asal" placeholder="Bandara Asal" class="border p-3 rounded w-full pl-10" />
                     <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
@@ -75,12 +74,21 @@
                     <div id="bandara-tujuan-results" class="absolute bg-white border rounded w-full mt-1 hidden"></div>
                 </div>
                 <div class="relative">
-                    <input type="text" name="namaKelas" id="namaKelas" placeholder="kelas" class="border p-3 rounded w-full pl-10" />
-                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                    <select name="namaKelas" id="namaKelas" class="border p-3 rounded w-full pl-10 appearance-none focus:ring-2 focus:ring-blue-500">
+                        <option value="" disabled selected>Pilih Kelas</option>
+                        @foreach($classes as $class)
+                            <option value="{{ $class->id }}">{{ $class->nama_kelas }}</option>
+                        @endforeach
+                    </select>
+                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">
                         <i class="material-icons">flight_class</i>
                     </span>
-                    <div id="bandara-tujuan-results" class="absolute bg-white border rounded w-full mt-1 hidden"></div>
-                </div>
+                    <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-500">
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 01.832.445l5 7a1 1 0 01-.832 1.555H5a1 1 0 01-.832-1.555l5-7A1 1 0 0110 3zm0 2.236L6.868 10h6.264L10 5.236z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </div>                
                 <div class="relative">
                     <input type="date" name="tanggal" class="border p-3 rounded w-full pl-10" />
                     <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
@@ -88,7 +96,7 @@
                     </span>
                 </div>
                 <div class="relative">
-                    <input type="number" name="jumlah_penumpang" placeholder="Jumlah Penumpang" class="border p-3 rounded w-full pl-10" />
+                    <input type="number" name="jumlah_penumpang" value="1" placeholder="Jumlah Penumpang" class="border p-3 rounded w-full pl-10" />
                     <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
                         <i class="material-icons">people</i>
                     </span>

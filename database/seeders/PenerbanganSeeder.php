@@ -2,29 +2,48 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Penerbangan;
+use App\Models\Bandara;
+use App\Models\Pesawat;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class PenerbanganSeeder extends Seeder
 {
-    /**
-     * Jalankan seeder.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
-        Penerbangan::create([
-            'slug' => 'garuda-jkt-sby',
-            'tanggal_berangkat' => '2025-05-01',
-            'tanggal_tiba' => '2025-05-01',
-            'jam_berangkat' => '10:00:00',
-            'id_bandara_asal' => 1, // ID Bandara Soekarno-Hatta (misalnya)
-            'id_bandara_tujuan' => 2, // ID Bandara Juanda Surabaya (misalnya)
-            'id_pesawat' => 1, // ID Pesawat Garuda Indonesia A330
-            'maks_penumpang' => 300,
-            'harga_dewasa' => 1500000.00,
-            'harga_anak' => 800000.00,
-        ]);
+        $bandaraIds = Bandara::pluck('id')->toArray();
+        $pesawatIds = Pesawat::pluck('id')->toArray();
+
+        if (count($bandaraIds) < 2 || count($pesawatIds) < 1) {
+            $this->command->warn('Seeder gagal: Minimal harus ada 2 bandara dan 1 pesawat.');
+            return;
+        }
+
+        for ($i = 0; $i < 20; $i++) {
+            // Pilih asal dan tujuan berbeda
+            do {
+                $asal = fake()->randomElement($bandaraIds);
+                $tujuan = fake()->randomElement($bandaraIds);
+            } while ($asal === $tujuan);
+
+            $tanggalBerangkat = fake()->dateTimeBetween('+1 days', '+30 days');
+            $tanggalTiba = (clone $tanggalBerangkat)->modify('+2 hours');
+
+            $slug = Str::slug('penerbangan-' . $i . '-' . Str::random(5));
+
+            Penerbangan::create([
+                'slug' => $slug,
+                'tanggal_berangkat' => $tanggalBerangkat->format('Y-m-d'),
+                'tanggal_tiba' => $tanggalTiba->format('Y-m-d'),
+                'jam_berangkat' => $tanggalBerangkat->format('H:i:s'),
+                'id_bandara_asal' => $asal,
+                'id_bandara_tujuan' => $tujuan,
+                'id_pesawat' => fake()->randomElement($pesawatIds),
+                'maks_penumpang' => fake()->numberBetween(100, 300),
+                'harga_dewasa' => fake()->randomFloat(2, 500000, 2000000),
+                'harga_anak' => fake()->randomFloat(2, 300000, 1500000),
+            ]);
+        }
     }
 }

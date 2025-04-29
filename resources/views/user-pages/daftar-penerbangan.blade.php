@@ -49,15 +49,17 @@
         @if($penerbangan->count())
             <div class="grid gap-4">
                 @foreach($penerbangan as $item)
-                    <div class="border p-4 rounded shadow">
-                        <h3 class="text-xl font-semibold">{{ $item->bandaraAsal->nama_bandara }} ➔ {{ $item->bandaraTujuan->nama_bandara }}</h3>
-                        <p>Kota Asal: {{ $item->bandaraAsal->kota->nama_kota }}</p>
-                        <p>Kota Tujuan: {{ $item->bandaraTujuan->kota->nama_kota }}</p>
-                        <p>Tanggal Berangkat: {{ $item->tanggal_berangkat }}</p>
-                        <p>Kelas: {{ $item->pesawat->kelas->nama_kelas }}</p>
-                        <p>Harga: Rp {{ number_format($item->harga_dewasa) }}</p>
-                        <p>Sisa Kursi: {{ $item->maks_penumpang }}</p>
-                    </div>
+                    <a href="{{ route('pemesanan.form', ['slug' => $item->slug, 'jumlah_penumpang' => request('jumlah_penumpang')]) }}">
+                        <div class="border p-4 rounded shadow hover:shadow-lg transition">
+                            <h3 class="text-xl font-semibold">{{ $item->bandaraAsal->nama_bandara }} ➔ {{ $item->bandaraTujuan->nama_bandara }}</h3>
+                            <p>Kota Asal: {{ $item->bandaraAsal->kota->nama_kota }}</p>
+                            <p>Kota Tujuan: {{ $item->bandaraTujuan->kota->nama_kota }}</p>
+                            <p>Tanggal Berangkat: {{ $item->tanggal_berangkat }}</p>
+                            <p>Kelas: {{ $item->pesawat->kelas->nama_kelas }}</p>
+                            <p>Harga: Rp {{ number_format($item->harga_dewasa) }}</p>
+                            <p>Sisa Kursi: {{ $item->maks_penumpang }}</p>
+                        </div>
+                    </a>
                 @endforeach
             </div>
         @else

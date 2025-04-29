@@ -36,6 +36,31 @@ class KotaSeeder extends Seeder
                 'latitude' => 3.595196,
                 'longitude' => 98.672223,
             ],
+            [
+                'nama_kota' => 'Semarang',
+                'latitude' => -6.966667,
+                'longitude' => 110.416664,
+            ],
+            [
+                'nama_kota' => 'Yogyakarta',
+                'latitude' => -7.797068,
+                'longitude' => 110.370529,
+            ],
+            [
+                'nama_kota' => 'Padang',
+                'latitude' => -0.947083,
+                'longitude' => 100.417181,
+            ],
+            [
+                'nama_kota' => 'Balikpapan',
+                'latitude' => -1.265386,
+                'longitude' => 116.831200,
+            ],
+            [
+                'nama_kota' => 'Pangkalpinang',
+                'latitude' => -2.1314,
+                'longitude' => 106.1090,
+            ],
         ];
 
         foreach ($kotaList as $kota) {
