@@ -85,7 +85,7 @@ Route::middleware('auth')->group(function () {
     // Routing untuk operasi CRUD Kelas Pesawat
     Route::resource('/admin/kelas_pesawat', KelasPesawatController::class);
     // Routing untuk operasi CRUD Maskapai
-    Route::resource('/admin/maskapai', MaskapaiController::class);
+    Route::resource('admin/maskapai', MaskapaiController::class);
     // Routing untuk operasi CRUD Promo
     Route::resource('/admin/promo', PromoController::class);
     // Routing untuk operasi CRUD Pesawat
