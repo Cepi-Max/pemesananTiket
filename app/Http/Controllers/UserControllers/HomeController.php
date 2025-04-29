@@ -5,19 +5,25 @@ namespace App\Http\Controllers\UserControllers;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use App\Models\DashboardImage;
+use App\Models\KelasPesawat;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function home()
     {
-        // Mengambil data galeri dari database
         $galleries = Gallery::all();
+        $kelas_pesawat = KelasPesawat::all();        
+        $dashboardImages = DashboardImage::all(); 
 
-        // Mengambil data gambar dari tabel dashboard_image
-        $dashboardImages = DashboardImage::all(); // Ambil gambar pertama (sesuaikan jika ada lebih dari satu)
+        $data = [
+            'title' => 'Home',
+            'galleries' => $galleries,
+            'classes' => $kelas_pesawat,
+            'dashboardImages' => $dashboardImages,
+        ];
 
         // Mengirim data galeri dan gambar ke view 'homepage'
-        return view('user-pages.homepage', compact('galleries', 'dashboardImages'));
+        return view('user-pages.homepage', $data);
     }
 }

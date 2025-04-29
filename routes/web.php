@@ -15,6 +15,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\UserControllers\HomeController;
 use App\Http\Controllers\UserControllers\PesanTiketController;
+use App\Http\Controllers\UserControllers\UserPemesananController;
 use App\Http\Controllers\UserControllers\UserPenerbanganController;
 use App\Models\Bandara;
 use Illuminate\Http\Request;
@@ -22,25 +23,26 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::get('/welcome', function () {
+        return view('welcome');
+    });
+
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::get('/home', [HomeController::class, 'home']);
 
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('guest')->group(function () {
-    // Route Pencarian penerbangan di user
-});
+// Route Pencarian penerbangan di user
 Route::get('/penerbangan/search', [UserPenerbanganController::class, 'search'])->name('penerbangan.search');
+
+// Pemesanan tiket
+Route::get('/pemesanan/{slug}', [UserPemesananController::class, 'form'])->name('pemesanan.form');
+Route::post('/pemesanan/submit', [UserPemesananController::class, 'submit'])->name('pemesanan.submit');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

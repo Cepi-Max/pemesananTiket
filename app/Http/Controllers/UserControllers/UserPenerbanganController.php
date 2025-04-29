@@ -37,10 +37,15 @@ class UserPenerbanganController extends Controller
                 return $query->whereDate('tanggal_berangkat', $tanggal);
             })
             ->when($namaKelas, function($query) use ($namaKelas) {
-                $query->whereHas('pesawat.kelas', function($query) use ($namaKelas) {
-                    $query->where('nama_kelas', 'like', "%$namaKelas%");
-                });
+                    $query->whereHas('pesawat', function($query) use ($namaKelas) {
+                        $query->where('id_kelas', 'like', "%$namaKelas%");
+                    });
             })
+            // ->when($namaKelas, function($query) use ($namaKelas) {
+            //     $query->whereHas('pesawat.kelas', function($query) use ($namaKelas) {
+            //         $query->where('nama_kelas', 'like', "%$namaKelas%");
+            //     });
+            // })
             ->get();
 
         // Data yang akan dikirim ke view

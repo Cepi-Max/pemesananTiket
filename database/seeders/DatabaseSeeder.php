@@ -33,7 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BandaraSeeder::class);
         $this->call(PenerbanganSeeder::class);
         $this->call(PesanTiketSeeder::class);
-        $this->call(DetailPenumpangSeeder::class);
         $this->call(PromoSeeder::class);
 
         Article::factory(20)->recycle([
