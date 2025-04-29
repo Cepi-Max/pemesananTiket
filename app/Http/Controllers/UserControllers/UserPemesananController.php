@@ -38,7 +38,7 @@ class UserPemesananController extends Controller
             'penumpang.*.nama' => 'required|string|max:255',
             'penumpang.*.gender' => 'required|in:L,P',
         ]);
-        
+
         $penerbangan = Penerbangan::with('bandaraAsal', 'bandaraTujuan', 'pesawat')->findOrFail($request->penerbangan_id);
         // dd($penerbangan);
 
@@ -46,7 +46,7 @@ class UserPemesananController extends Controller
 
         $kodeBooking = strtoupper(Str::random(8));
 
-        $userId = Auth::id() ?? null; 
+        $userId = Auth::id() ?? null;
 
         $pemesanan = DB::transaction(function () use ($request, $penerbangan, $totalHarga, $kodeBooking, $userId) {
             $pesanan = PesanTiket::create([
@@ -67,13 +67,13 @@ class UserPemesananController extends Controller
                 DetailPenumpang::create([
                     'id_pemesanan_tiket' => $pesanan->id,
                     'nama_penumpang' => $penumpang['nama'],
-                    'jenis_kelamin' => $penumpang['gender'], 
-                    'tipe_penumpang' => 'dewasa', 
+                    'jenis_kelamin' => $penumpang['gender'],
+                    'tipe_penumpang' => 'dewasa',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
             }
-            
+
             return $pesanan;
         });
 
