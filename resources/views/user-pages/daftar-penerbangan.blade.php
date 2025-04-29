@@ -42,31 +42,65 @@
     </header>
 
     {{-- Hero --}}
-    <section
-        class="bg-[url('{{ asset('images/hero.png') }}')] bg-cover bg-center h-[50vh] text-white flex items-center">
-        <h2 class="text-2xl font-bold mb-4">Hasil Pencarian</h2>
+    <section class="max-w-4xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6">Daftar Tiket Penerbangan</h1>
 
-        @if($penerbangan->count())
-            <div class="grid gap-4">
-                @foreach($penerbangan as $item)
-                    <a href="{{ route('pemesanan.form', ['slug' => $item->slug, 'jumlah_penumpang' => request('jumlah_penumpang')]) }}">
-                        <div class="border p-4 rounded shadow hover:shadow-lg transition">
-                            <h3 class="text-xl font-semibold">{{ $item->bandaraAsal->nama_bandara }} ➔ {{ $item->bandaraTujuan->nama_bandara }}</h3>
-                            <p>Kota Asal: {{ $item->bandaraAsal->kota->nama_kota }}</p>
-                            <p>Kota Tujuan: {{ $item->bandaraTujuan->kota->nama_kota }}</p>
-                            <p>Tanggal Berangkat: {{ $item->tanggal_berangkat }}</p>
-                            <p>Kelas: {{ $item->pesawat->kelas->nama_kelas }}</p>
-                            <p>Harga: Rp {{ number_format($item->harga_dewasa) }}</p>
-                            <p>Sisa Kursi: {{ $item->maks_penumpang }}</p>
+        @foreach ($penerbangan as $item)
+            <div class="bg-white border rounded-xl shadow-sm p-4 mb-4 flex items-center justify-between">
+                <!-- Kiri: Logo & Info Maskapai -->
+                <div class="flex items-center gap-4">
+                    <!-- Logo -->
+                    <div
+                        class="w-20 h-20 rounded-full bg-gray-50 flex items-center justify-center overflow-hidden border-2 border-blue-400">
+                        <img src="{{ asset('images/' . $item->pesawat->maskapai->logo) }}"
+                            alt="Logo {{ $item->pesawat->maskapai->nama_maskapai }}"
+                            class="w-full h-auto object-contain ">
+                    </div>
+
+                    <!-- Info -->
+                    <div>
+                        <h2 class=" text-lg text-gray-900 font-bold">
+                            {{ $item->pesawat->maskapai->nama_maskapai }}
+                        </h2>
+
+                        <p class="text-sm text-gray-800">
+                            {{ $item->bandaraAsal->nama_bandara }} — {{ $item->bandaraTujuan->nama_bandara }}
+                        </p>
+
+                        <!-- Data Tambahan -->
+                        <div class="mt-1 text-sm text-gray-700 space-y-0.5">
+                            <p>Tanggal Berangkat: <span
+                                    class="font-medium  text-green-500 bg-green-100 rounded-lg px-2">{{ $item->tanggal_berangkat }}</span><span
+                                    class=" font-medium mx-1 text-green-500 bg-green-100 rounded-lg px-2">{{ $item->jam_berangkat }}</span>
+                            </p>
+                            <p>Kelas: <span
+                                    class="font-medium  text-blue-500 bg-blue-100 rounded-lg px-2">{{ $item->pesawat->kelas->nama_kelas }}</span>
+                            </p>
+                            <p>Sisa Kursi: <span
+                                    class="font-medium text-yellow-500 bg-yellow-100 rounded-lg px-2">{{ $item->maks_penumpang }}</span>
+                            </p>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Kanan: Harga & Tombol -->
+                <div class="text-right">
+                    <p class="text-lg font-semibold text-red-500">
+                        Rp {{ number_format($item->harga_dewasa, 0, ',', '.') }}
+                    </p>
+                    <a href="{{ route('pemesanan.form', ['slug' => $item->slug, 'jumlah_penumpang' => request('jumlah_penumpang')]) }}"
+                        class="inline-block mt-2 px-4 py-2 text-blue-800 text-sm rounded flex items-center gap-1">
+                        Pilih Tiket
+                        <span class="material-icons text-base">arrow_forward</span>
                     </a>
-                @endforeach
+
+                </div>
             </div>
-        @else
-            <p class="text-gray-500">Tidak ada penerbangan yang sesuai bro 😢</p>
-        @endif
+        @endforeach
 
     </section>
+
+
 
     <footer class="bg-blue-800 text-white py-10">
         <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-10">

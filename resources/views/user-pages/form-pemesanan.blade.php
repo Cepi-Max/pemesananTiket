@@ -44,100 +44,128 @@
     {{-- Hero --}}
     <section>
         @if (session('success'))
-    <div class="mb-6 bg-red-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-@if (session('error'))
-    <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-@if ($errors->any())
-    <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">Oops!</strong> Ada beberapa kesalahan saat mengisi form:
-        <ul class="mt-2 list-disc list-inside">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+            <div class="mb-6 bg-red-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if ($errors->any())
+            <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Oops!</strong> Ada beberapa kesalahan saat mengisi form:
+                <ul class="mt-2 list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <form action="{{ route('pemesanan.submit') }}" method="POST">
+        <form action="{{ route('pemesanan.submit') }}" method="POST"
+            class="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow space-y-6">
             @csrf
-        
-            <!-- Informasi Penerbangan -->
-            <p>Harga Tiket: Rp {{ number_format($penerbangan->harga_dewasa) }}</p>
-            <p>Jumlah Penumpang: {{ $jumlahPenumpang }}</p>
-            <p class="font-bold">Total Harga: Rp {{ number_format($penerbangan->harga_dewasa * $jumlahPenumpang) }}</p>
-        
-            <!-- Data Pemesan -->
-            <div class="border p-4 mb-4">
-                <h3 class="text-lg font-semibold mb-4">Data Pemesan</h3>
-                <div class="mb-4">
-                    <div class="flex items-center space-x-6">
-                        <label class="flex items-center">
-                            <input type="radio" name="pemesan_gender" value="L" required class="form-radio text-blue-500">
-                            <span class="ml-2 text-gray-700">Tuan</span>
-                        </label>
-                        <label class="flex items-center">
-                            <input type="radio" name="pemesan_gender" value="P" required class="form-radio text-pink-500">
-                            <span class="ml-2 text-gray-700">Nyonya</span>
-                        </label>
-                    </div>
-                </div>
-                @error('pemesan_gender')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
-                <input class="border p-3 rounded w-[20%]" type="text" name="pemesan_nama" placeholder="nama lengkap" required>
-                @error('pemesan_nama')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
-                <input class="border p-3 rounded w-[20%]" type="email" name="pemesan_email" placeholder="email" required>
-                @error('pemesan_email')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
-                <input class="border p-3 rounded w-[20%]" type="text" name="pemesan_telpon" placeholder="no telp" required>
-                @error('pemesan_telpon')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
+
+            <!-- Info Penerbangan -->
+            <div class="space-y-1 text-gray-800">
+                <p>Harga Tiket: <strong>Rp {{ number_format($penerbangan->harga_dewasa) }}</strong></p>
+                <p>Jumlah Penumpang: <strong>{{ $jumlahPenumpang }}</strong></p>
+                <p class="text-lg font-bold">Total Harga: Rp
+                    {{ number_format($penerbangan->harga_dewasa * $jumlahPenumpang) }}</p>
             </div>
 
-            <!-- Data Penumpang Dinamis -->
-            @for($i = 0; $i < $jumlahPenumpang; $i++)
-                <div class="border p-4 mb-4">
-                    <h3 class="text-lg font-semibold mb-4">Data Penumpang {{ $i + 1 }}</h3>
-                    <div class="mb-4">
-                        <div class="flex items-center space-x-6">
-                            <label class="flex items-center">
-                                <input type="radio" name="penumpang[{{ $i }}][gender]" value="L" required class="form-radio text-blue-500">
-                                <span class="ml-2 text-gray-700">Tuan</span>
-                            </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="penumpang[{{ $i }}][gender]" value="P" required class="form-radio text-pink-500">
-                                <span class="ml-2 text-gray-700">Nyonya</span>
-                            </label>
-                        </div>
+            <!-- Data Pemesan -->
+            <div class="border border-gray-200 rounded p-4 space-y-4">
+                <h3 class="text-lg font-semibold">Data Pemesan</h3>
+
+                <div class="flex items-center gap-6">
+                    <label class="flex items-center">
+                        <input type="radio" name="pemesan_gender" value="L" required
+                            class="form-radio text-blue-600">
+                        <span class="ml-2">Tuan</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="pemesan_gender" value="P" required
+                            class="form-radio text-pink-500">
+                        <span class="ml-2">Nyonya</span>
+                    </label>
+                </div>
+                @error('pemesan_gender')
+                    <p class="text-sm text-red-500">{{ $message }}</p>
+                @enderror
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <input type="text" name="pemesan_nama" placeholder="Nama Lengkap" required
+                            class="w-full p-3 border rounded">
+                        @error('pemesan_nama')
+                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
-                    @error('penumpang[{{ $i }}][gender]')
-                        <small class="text-danger">{{ $message }}</small>
+                    <div>
+                        <input type="email" name="pemesan_email" placeholder="Email" required
+                            class="w-full p-3 border rounded">
+                        @error('pemesan_email')
+                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <input type="text" name="pemesan_telpon" placeholder="No. Telepon" required
+                            class="w-full p-3 border rounded">
+                        @error('pemesan_telpon')
+                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Penumpang -->
+            @for ($i = 0; $i < $jumlahPenumpang; $i++)
+                <div class="border border-gray-200 rounded p-4 space-y-4">
+                    <h3 class="text-lg font-semibold">Data Penumpang {{ $i + 1 }}</h3>
+
+                    <div class="flex items-center gap-6">
+                        <label class="flex items-center">
+                            <input type="radio" name="penumpang[{{ $i }}][gender]" value="L" required
+                                class="form-radio text-blue-600">
+                            <span class="ml-2">Tuan</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="penumpang[{{ $i }}][gender]" value="P" required
+                                class="form-radio text-pink-500">
+                            <span class="ml-2">Nyonya</span>
+                        </label>
+                    </div>
+                    @error("penumpang.$i.gender")
+                        <p class="text-sm text-red-500">{{ $message }}</p>
                     @enderror
-                    <input class="border p-3 rounded w-full" type="text" name="penumpang[{{ $i }}][nama]" required placeholder="Nama lengkap penumpang {{ $i + 1 }}" required>
-                    @error('penumpang[{{ $i }}][nama]')
-                        <small class="text-danger">{{ $message }}</small>
+
+                    <input type="text" name="penumpang[{{ $i }}][nama]"
+                        placeholder="Nama Lengkap Penumpang {{ $i + 1 }}" required
+                        class="w-full p-3 border rounded">
+                    @error("penumpang.$i.nama")
+                        <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                     @enderror
                 </div>
             @endfor
-        
-            <!-- Hidden input -->
+
+            <!-- Hidden Inputs -->
             <input type="hidden" name="penerbangan_id" value="{{ $penerbangan->id }}">
             <input type="hidden" name="jumlah_penumpang" value="{{ $jumlahPenumpang }}">
-        
-            <button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded">Pesan Tiket</button>
-        </form>        
+
+            <!-- Submit -->
+            <div class="text-right">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">
+                    Pesan Tiket
+                </button>
+            </div>
+        </form>
+
     </section>
 
     <footer class="bg-blue-800 text-white py-10">

@@ -17,13 +17,13 @@ class MaskapaiSeeder extends Seeder
         Maskapai::create([
             'slug' => 'garuda-indonesia',
             'nama_maskapai' => 'Garuda Indonesia',
-            'logo' => 'garuda.jpg',
+            'logo' => 'garuda.png',
         ]);
 
         Maskapai::create([
             'slug' => 'lion-air',
             'nama_maskapai' => 'Lion Air',
-            'logo' => 'lion.jpg',
+            'logo' => 'Lion.png',
         ]);
     }
 }
