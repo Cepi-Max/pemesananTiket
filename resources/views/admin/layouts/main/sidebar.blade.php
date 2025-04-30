@@ -35,6 +35,12 @@
           </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('admin.maskapai.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="maskapai">
+            <i class="material-symbols-rounded opacity-5">picture_as_pdf</i>
+            <span class="nav-link-text ms-1">Daftar Maskapai</span>
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('kelas_pesawat.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('kelas_pesawat.index') }}">
             <i class="material-symbols-rounded opacity-5">flight_class</i>
             <span class="nav-link-text ms-1">Kelas Pesawat</span>
