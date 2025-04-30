@@ -11,13 +11,13 @@ class KelasPesawatController extends Controller
     public function index()
     {
         $kelasPesawats = KelasPesawat::all(); // Ambil semua data kelas pesawat dari database
-        return view('kelas_pesawat.index', compact('kelasPesawat')); // Kirim data kelas pesawat ke view
+        return view('admin.kelas_pesawat.index', compact('kelasPesawats')); // Kirim data kelas pesawat ke view
     }
 
     // Menampilkan form tambah kelas pesawat
     public function create()
     {
-        return view('kelas_pesawat.create'); // Menampilkan form untuk menambah kelas pesawat
+        return view('admin.kelas_pesawat.create'); // Menampilkan form untuk menambah kelas pesawat
     }
 
     // Menyimpan kelas pesawat ke database
@@ -43,7 +43,7 @@ class KelasPesawatController extends Controller
     public function edit($id)
     {
         $kelasPesawat = KelasPesawat::findOrFail($id); // Ambil data kelas pesawat berdasarkan ID
-        return view('kelas_pesawat.edit', compact('kelasPesawat')); // Kirim data kelas pesawat ke form edit
+        return view('admin.kelas_pesawat.edit', compact('kelasPesawat')); // Kirim data kelas pesawat ke form edit
     }
 
     // Menyimpan perubahan kelas pesawat
@@ -62,7 +62,7 @@ class KelasPesawatController extends Controller
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('kelas_pesawat.index')->with('success', 'Kelas pesawat berhasil diperbarui.');
+        return redirect()->route('admin.kelas_pesawat.index')->with('success', 'Kelas pesawat berhasil diperbarui.');
     }
 
     // Menghapus kelas pesawat
@@ -72,6 +72,6 @@ class KelasPesawatController extends Controller
         $kelasPesawat->delete(); // Hapus data kelas pesawat
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('kelas_pesawat.index')->with('success', 'Kelas pesawat berhasil dihapus.');
+        return redirect()->route('admin.kelas_pesawat.index')->with('success', 'Kelas pesawat berhasil dihapus.');
     }
 }
