@@ -13,7 +13,7 @@ class PenerbanganController extends Controller
     public function index()
     {
         $penerbangans = Penerbangan::all(); // Ambil semua data penerbangan dari database
-        return view('penerbangan.index', compact('penerbangan')); // Kirim data penerbangan ke view
+        return view('admin.penerbangan.index', compact('penerbangans')); // Kirim data penerbangan ke view
     }
 
     // Menampilkan form tambah penerbangan
@@ -21,7 +21,7 @@ class PenerbanganController extends Controller
     {
         $bandaras = Bandara::all(); // Ambil semua bandara untuk dropdown
         $pesawats = Pesawat::all(); // Ambil semua pesawat untuk dropdown
-        return view('penerbangan.create', compact('bandara', 'pesawat')); // Menampilkan form untuk menambah penerbangan
+        return view('admin.penerbangan.create', compact('bandara', 'pesawat')); // Menampilkan form untuk menambah penerbangan
     }
 
     // Menyimpan penerbangan ke database
@@ -56,7 +56,7 @@ class PenerbanganController extends Controller
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('penerbangan.index')->with('success', 'Penerbangan berhasil ditambahkan.');
+        return redirect()->route('admin.penerbangan.index')->with('success', 'Penerbangan berhasil ditambahkan.');
     }
 
     // Menampilkan form edit penerbangan
@@ -65,7 +65,7 @@ class PenerbanganController extends Controller
         $penerbangan = Penerbangan::findOrFail($id); // Ambil data penerbangan berdasarkan ID
         $bandaras = Bandara::all(); // Ambil semua bandara untuk dropdown
         $pesawats = Pesawat::all(); // Ambil semua pesawat untuk dropdown
-        return view('penerbangan.edit', compact('penerbangan', 'bandara', 'pesawat')); // Kirim data penerbangan ke form edit
+        return view('admin.penerbangan.edit', compact('penerbangan', 'bandara', 'pesawat')); // Kirim data penerbangan ke form edit
     }
 
     // Menyimpan perubahan penerbangan
@@ -100,7 +100,7 @@ class PenerbanganController extends Controller
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('penerbangan.index')->with('success', 'Penerbangan berhasil diperbarui.');
+        return redirect()->route('admin.penerbangan.index')->with('success', 'Penerbangan berhasil diperbarui.');
     }
 
     // Menghapus penerbangan
@@ -110,6 +110,6 @@ class PenerbanganController extends Controller
         $penerbangan->delete(); // Hapus data penerbangan
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('penerbangan.index')->with('success', 'Penerbangan berhasil dihapus.');
+        return redirect()->route('admin.penerbangan.index')->with('success', 'Penerbangan berhasil dihapus.');
     }
 }

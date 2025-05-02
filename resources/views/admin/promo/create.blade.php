@@ -1,49 +1,52 @@
 @extends('admin.layouts.main.app')
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-lg-6">
-            <h4>Tambah Maskapai</h4>
+<h2>Tambah Promo</h2>
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+<form action="{{ route('promo.store') }}" method="POST">
+    @csrf
 
-            @if(session('success'))
-                <div class="alert alert-success" id="notif">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            <form action="{{ route('admin.maskapai.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-
-                <div class="mb-3">
-                    <label for="nama_maskapai" class="form-label">Nama Maskapai</label>
-                    <input type="text" name="nama_maskapai" class="form-control" id="nama_maskapai" placeholder="Contoh: Garuda Indonesia" value="{{ old('nama_maskapai') }}" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="slug" class="form-label">Slug</label>
-                    <input type="text" name="slug" class="form-control" id="slug" placeholder="Contoh: garuda-indonesia" value="{{ old('slug') }}" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="logo" class="form-label">Logo Maskapai</label>
-                    <input type="file" name="logo" class="form-control" id="logo" accept="image/*">
-                </div>
-
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="{{ route('admin.maskapai.index') }}" class="btn btn-secondary">Batal</a>
-            </form>
-        </div>
+    <div>
+        <label>Kode Promo:</label>
+        <input type="text" name="kode_promo" required>
     </div>
-</div>
+
+    <div>
+        <label>Slug (unique):</label>
+        <input type="text" name="slug" required>
+    </div>
+
+    <div>
+        <label>Diskon (%)</label>
+        <input type="number" id="jumlah_persen" name="jumlah_%" min="0" max="100" step="0.01">
+    </div>
+
+    <div>
+        <label>Diskon (Rp)</label>
+        <input type="number" id="jumlah_rp" name="jumlah_rp" min="0" step="0.01">
+    </div>
+
+    <button type="submit">Simpan</button>
+</form>
+
+<script>
+    const persen = document.getElementById('jumlah_persen');
+    const rupiah = document.getElementById('jumlah_rp');
+
+    persen.addEventListener('input', function () {
+        if (persen.value) {
+            rupiah.disabled = true;
+        } else {
+            rupiah.disabled = false;
+        }
+    });
+
+    rupiah.addEventListener('input', function () {
+        if (rupiah.value) {
+            persen.disabled = true;
+        } else {
+            persen.disabled = false;
+        }
+    });
+</script>
 @endsection
