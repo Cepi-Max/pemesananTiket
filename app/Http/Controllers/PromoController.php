@@ -11,13 +11,13 @@ class PromoController extends Controller
     public function index()
     {
         $promos = Promo::all(); // Ambil semua data promo dari database
-        return view('promo.index', compact('promo')); // Kirim data promo ke view
+        return view('admin.promo.index', compact('promos')); // Kirim data promo ke view
     }
 
     // Menampilkan form tambah promo
     public function create()
     {
-        return view('promo.create'); // Menampilkan form untuk menambah promo
+        return view('admin.promo.create'); // Menampilkan form untuk menambah promo
     }
 
     // Menyimpan promo ke database
@@ -40,14 +40,14 @@ class PromoController extends Controller
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('promo.index')->with('success', 'Promo berhasil ditambahkan.');
+        return redirect()->route('admin.promo.index')->with('success', 'Promo berhasil ditambahkan.');
     }
 
     // Menampilkan form edit promo
     public function edit($id)
     {
         $promo = Promo::findOrFail($id); // Ambil data promo berdasarkan ID
-        return view('promo.edit', compact('promo')); // Kirim data promo ke form edit
+        return view('admin.promo.edit', compact('promo')); // Kirim data promo ke form edit
     }
 
     // Menyimpan perubahan promo
@@ -70,7 +70,7 @@ class PromoController extends Controller
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('promo.index')->with('success', 'Promo berhasil diperbarui.');
+        return redirect()->route('admin.promo.index')->with('success', 'Promo berhasil diperbarui.');
     }
 
     // Menghapus promo
@@ -80,6 +80,6 @@ class PromoController extends Controller
         $promo->delete(); // Hapus data promo
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('promo.index')->with('success', 'Promo berhasil dihapus.');
+        return redirect()->route('admin.promo.index')->with('success', 'Promo berhasil dihapus.');
     }
 }

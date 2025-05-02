@@ -50,20 +50,20 @@
       
 
           <!-- Promo -->
-          {{-- <li class="nav-item">
-              <a class="nav-link {{ request()->routeIs('admin.promo.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.promo.index') }}">
+          <li class="nav-item">
+              <a class="nav-link {{ request()->routeIs('admin.promo.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('promo.index') }}">
                   <i class="material-symbols-rounded opacity-5">local_offer</i>
                   <span class="nav-link-text ms-1">Promo</span>
               </a>
-          </li> --}}
+          </li>
 
           <!-- Penerbangan -->
-          {{-- <li class="nav-item">
-              <a class="nav-link {{ request()->routeIs('admin.penerbangan.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.penerbangan.index') }}">
+          <li class="nav-item">
+              <a class="nav-link {{ request()->routeIs('admin.penerbangan.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('penerbangan.index') }}">
                   <i class="material-symbols-rounded opacity-5">flight</i>
                   <span class="nav-link-text ms-1">Penerbangan</span>
               </a>
-          </li> --}}
+          </li>
 
           <!-- Bandara -->
           {{-- <li class="nav-item">
