@@ -17,6 +17,7 @@ use App\Http\Controllers\UserControllers\HomeController;
 use App\Http\Controllers\UserControllers\PesanTiketController;
 use App\Http\Controllers\UserControllers\UserPemesananController;
 use App\Http\Controllers\UserControllers\UserPenerbanganController;
+use App\Http\Controllers\UserControllers\DaftarPenerbanganController;
 use App\Models\Bandara;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,7 @@ Route::get('/penerbangan/search', [UserPenerbanganController::class, 'search'])-
 // Pemesanan tiket
 Route::get('/pemesanan/{slug}', [UserPemesananController::class, 'form'])->name('pemesanan.form');
 Route::post('/pemesanan/submit', [UserPemesananController::class, 'submit'])->name('pemesanan.submit');
+Route::get('daftar-penerbangan', [UserPemesananController::class, 'index'])->name('daftar.penerbangan');
 
 
 Route::middleware('auth')->group(function () {
