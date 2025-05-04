@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Payment;
+
 
 class PesanTiket extends Model
 {
@@ -59,5 +61,10 @@ class PesanTiket extends Model
     public function orderer()
     {
         return $this->belongsTo(User::class, 'id_orderer');
+    }
+    // Relasi One-to-One dengan tabel payments
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
     }
 }
