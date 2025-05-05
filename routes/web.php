@@ -19,7 +19,7 @@ use App\Http\Controllers\UserControllers\HomeController;
 use App\Http\Controllers\UserControllers\PesanTiketController;
 use App\Http\Controllers\UserControllers\UserPemesananController;
 use App\Http\Controllers\UserControllers\UserPenerbanganController;
-// use App\Http\Controllers\DaftarPenerbanganController;
+
 use App\Models\Bandara;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
