@@ -23,7 +23,7 @@
                     <label for="slug" class="form-label">Slug</label>
                     <input type="text" name="slug" class="form-control" id="slug" placeholder="Contoh: ekonomi" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Tambah</button>
+                <button type="submit" class="btn btn-dark">Tambah</button>
             </form>
         </div>
 

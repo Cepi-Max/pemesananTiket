@@ -19,7 +19,7 @@ class CreatePesanTiketTable extends Migration
             $table->unsignedBigInteger('id_orderer')->nullable(); // Kolom untuk id_orderer (foreign key ke user)
             $table->unsignedBigInteger('id_penerbangan'); // Kolom untuk id_penerbangan (foreign key ke penerbangan)
             $table->decimal('total_harga', 15, 2); // Kolom untuk total harga
-            $table->string('status'); // Kolom untuk status
+            $table->string('status')->default('pending'); // Kolom untuk status
             $table->string('nama_pemesan')->nullable();
             $table->string('email_pemesan')->nullable();
             $table->string('telp_pemesan')->nullable();

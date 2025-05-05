@@ -36,7 +36,7 @@
                     <input type="text" name="slug" class="form-control" id="slug" placeholder="Contoh: ekonomi" value="{{ old('slug') }}" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-dark">Simpan</button>
                 <a href="{{ route('kelas_pesawat.index') }}" class="btn btn-secondary">Batal</a>
             </form>
         </div>

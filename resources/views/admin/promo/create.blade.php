@@ -1,33 +1,35 @@
 @extends('admin.layouts.main.app')
 
 @section('content')
-<h2>Tambah Promo</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">Tambah Promo</h2>
 
-<form action="{{ route('promo.store') }}" method="POST">
-    @csrf
+    <form action="{{ route('promo.store') }}" method="POST" class="card p-4 shadow-sm">
+        @csrf
 
-    <div>
-        <label>Kode Promo:</label>
-        <input type="text" name="kode_promo" required>
-    </div>
+        <div class="mb-3">
+            <label for="kode_promo" class="form-label">Kode Promo:</label>
+            <input type="text" name="kode_promo" id="kode_promo" class="form-control" required>
+        </div>
 
-    <div>
-        <label>Slug (unique):</label>
-        <input type="text" name="slug" required>
-    </div>
+        <div class="mb-3">
+            <label for="slug" class="form-label">Slug (unique):</label>
+            <input type="text" name="slug" id="slug" class="form-control" required>
+        </div>
 
-    <div>
-        <label>Diskon (%)</label>
-        <input type="number" id="jumlah_persen" name="jumlah_%" min="0" max="100" step="0.01">
-    </div>
+        <div class="mb-3">
+            <label for="jumlah_persen" class="form-label">Diskon (%)</label>
+            <input type="number" id="jumlah_persen" name="jumlah_%" min="0" max="100" step="0.01" class="form-control">
+        </div>
 
-    <div>
-        <label>Diskon (Rp)</label>
-        <input type="number" id="jumlah_rp" name="jumlah_rp" min="0" step="0.01">
-    </div>
+        <div class="mb-3">
+            <label for="jumlah_rp" class="form-label">Diskon (Rp)</label>
+            <input type="number" id="jumlah_rp" name="jumlah_rp" min="0" step="0.01" class="form-control">
+        </div>
 
-    <button type="submit">Simpan</button>
-</form>
+        <button type="submit" class="btn btn-success">Simpan</button>
+    </form>
+</div>
 
 <script>
     const persen = document.getElementById('jumlah_persen');

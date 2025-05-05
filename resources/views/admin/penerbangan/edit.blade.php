@@ -1,7 +1,7 @@
 @extends('admin.layouts.main.app')
 
 @section('content')
-<div class="container">
+<div class="container mt-4">
     <h2>Edit Data Penerbangan</h2>
 
     @if ($errors->any())
@@ -90,7 +90,7 @@
             <input type="number" class="form-control" id="harga_anak" name="harga_anak" value="{{ old('harga_anak', $penerbangan->harga_anak) }}" min="0" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        <button type="submit" class="btn btn-dark">Simpan Perubahan</button>
         <a href="{{ route('penerbangan.index') }}" class="btn btn-secondary">Batal</a>
     </form>
 </div>

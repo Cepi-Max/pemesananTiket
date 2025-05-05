@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Payment;
+
 
 class PesanTiket extends Model
 {
@@ -14,6 +16,10 @@ class PesanTiket extends Model
     protected $fillable = [
         'kode_booking',
         'id_orderer',
+        'nama_pemesan',
+        'email_pemesan',
+        'telp_pemesan',
+        'gender_pemesan',
         'id_penerbangan',
         'tanggal_berangkat',
         'tanggal_tiba',
@@ -59,5 +65,10 @@ class PesanTiket extends Model
     public function orderer()
     {
         return $this->belongsTo(User::class, 'id_orderer');
+    }
+    // Relasi One-to-One dengan tabel payments
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
     }
 }
