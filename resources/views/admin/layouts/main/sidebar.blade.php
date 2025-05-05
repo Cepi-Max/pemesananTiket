@@ -22,12 +22,12 @@
             <span class="nav-link-text ms-1">Info</span>
           </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('show.downloadfile'. '*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('show.downloadfile.form') }}">
             <i class="material-symbols-rounded opacity-5">picture_as_pdf</i>
             <span class="nav-link-text ms-1">File Download</span>
           </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.kota.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.kota.index') }}">
             <i class="material-symbols-rounded opacity-5">picture_as_pdf</i>
@@ -72,12 +72,12 @@
           </li>
 
           <!-- Bandara -->
-          {{-- <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('admin.bandara.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.bandara.index') }}">
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('admin.bandara.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('bandara.index') }}">
                 <i class="material-symbols-rounded opacity-5">airport_shuttle</i>
                 <span class="nav-link-text ms-1">Bandara</span>
             </a>
-        </li> --}}
+        </li>
         
         {{-- <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('show.populations') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('show.populations') }}">

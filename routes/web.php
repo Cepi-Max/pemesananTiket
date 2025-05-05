@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\ArticleCategoryController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\BandaraController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailPenumpangController;
 use App\Http\Controllers\DownloadAbleFileController;
@@ -13,14 +14,15 @@ use App\Http\Controllers\PenerbanganController;
 use App\Http\Controllers\PesawatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromoController;
+use App\Http\Controllers\UserControllers\DaftarPenerbanganController;
 use App\Http\Controllers\UserControllers\HomeController;
 use App\Http\Controllers\UserControllers\PesanTiketController;
 use App\Http\Controllers\UserControllers\UserPemesananController;
 use App\Http\Controllers\UserControllers\UserPenerbanganController;
-use App\Http\Controllers\UserControllers\DaftarPenerbanganController;
 use App\Models\Bandara;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -88,6 +90,7 @@ Route::middleware('auth')->group(function () {
     
     // Routing untuk operasi CRUD Kelas Pesawat
     Route::resource('/admin/kelas_pesawat', KelasPesawatController::class);
+    Route::resource('/admin/bandara', BandaraController::class);
     // Routing untuk operasi CRUD Maskapai
     Route::resource('admin/maskapai', MaskapaiController::class);
     // Routing untuk operasi CRUD Promo
