@@ -16,6 +16,10 @@ class PesanTiket extends Model
     protected $fillable = [
         'kode_booking',
         'id_orderer',
+        'nama_pemesan',
+        'email_pemesan',
+        'telp_pemesan',
+        'gender_pemesan',
         'id_penerbangan',
         'tanggal_berangkat',
         'tanggal_tiba',

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\DashboardImage;
+use App\Models\PesanTiket;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -21,9 +23,28 @@ class DashboardController extends Controller
 
     public function index()
     {
-       
+        $totalPenjualan = DB::table('detail_penumpang')->count(); // Total tiket terjual
+        $totalPendapatan = PesanTiket::where('status', 'paid')
+        ->sum('total_harga'); // Total pendapatan yang diterima
+        $penjualanPerBulan = PesanTiket::select(DB::raw('YEAR(created_at) as tahun, MONTH(created_at) as bulan, sum(total_harga) as pendapatan'))
+        ->where('status', 'paid')
+        ->groupBy(DB::raw('YEAR(created_at), MONTH(created_at)'))
+        ->get();
+        $penjualanPerPenerbangan = DB::table('penerbangan')
+        ->join('pesan_tiket', 'penerbangan.id', '=', 'pesan_tiket.id_penerbangan')
+        ->join('detail_penumpang', 'pesan_tiket.id', '=', 'detail_penumpang.id_pemesanan_tiket')
+        ->select('penerbangan.slug', DB::raw('count(detail_penumpang.id) as total_penumpang'))
+        ->groupBy('penerbangan.slug')
+        ->get();
+
+        
+
         $data = [
             'title' => 'Beranda Admin',
+            'totalPenjualan' => $totalPenjualan,
+            'totalPendapatan' => $totalPendapatan,
+            'penjualanPerBulan' => $penjualanPerBulan,
+            'penjualanPerPenerbangan' => $penjualanPerPenerbangan,
         ];
         return view('admin/dashboard/index', $data);
     }

@@ -28,10 +28,10 @@ class UserPemesananController extends Controller
     public function submit(Request $request)
     {
         $request->validate([
-            'pemesan_nama' => 'required|string|max:255',
-            'pemesan_email' => 'required|email|max:255',
-            'pemesan_telpon' => 'required|string|max:20',
-            'pemesan_gender' => 'required|in:L,P',
+            'nama_pemesan' => 'required|string|max:255',
+            'email_pemesan' => 'required|email|max:255',
+            'telp_pemesan' => 'required|string|max:20',
+            'gender_pemesan' => 'required|in:L,P',
             'penerbangan_id' => 'required|exists:penerbangan,id',
             'jumlah_penumpang' => 'required|integer|min:1',
             'penumpang' => 'required|array|min:1',
@@ -47,7 +47,7 @@ class UserPemesananController extends Controller
         $kodeBooking = strtoupper(Str::random(8));
 
         $userId = Auth::id() ?? null;
-
+// dd($request->all());
         $pemesanan = DB::transaction(function () use ($request, $penerbangan, $totalHarga, $kodeBooking, $userId) {
             $pesanan = PesanTiket::create([
                 'kode_booking' => $kodeBooking,
@@ -55,7 +55,7 @@ class UserPemesananController extends Controller
                 'nama_pemesan' => $request->nama_pemesan,
                 'email_pemesan' => $request->email_pemesan,
                 'telp_pemesan' => $request->telp_pemesan,
-                'gender_pemesan' => $request->pemesan_gender,
+                'gender_pemesan' => $request->gender_pemesan,
                 'id_penerbangan' => $penerbangan->id,
                 'total_harga' => $totalHarga,
                 'status' => 'Menunggu Pembayaran',

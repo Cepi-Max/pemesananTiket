@@ -85,39 +85,39 @@
 
                 <div class="flex items-center gap-6">
                     <label class="flex items-center">
-                        <input type="radio" name="pemesan_gender" value="L" required
+                        <input type="radio" name="gender_pemesan" value="L" required
                             class="form-radio text-blue-600">
                         <span class="ml-2">Tuan</span>
                     </label>
                     <label class="flex items-center">
-                        <input type="radio" name="pemesan_gender" value="P" required
+                        <input type="radio" name="gender_pemesan" value="P" required
                             class="form-radio text-pink-500">
                         <span class="ml-2">Nyonya</span>
                     </label>
                 </div>
-                @error('pemesan_gender')
+                @error('gender_pemesan')
                     <p class="text-sm text-red-500">{{ $message }}</p>
                 @enderror
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <input type="text" name="pemesan_nama" placeholder="Nama Lengkap" required
+                        <input type="text" name="nama_pemesan" placeholder="Nama Lengkap" required
                             class="w-full p-3 border rounded">
-                        @error('pemesan_nama')
+                        @error('nama_pemesan')
                             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <input type="email" name="pemesan_email" placeholder="Email" required
+                        <input type="email" name="email_pemesan" placeholder="Email" required
                             class="w-full p-3 border rounded">
-                        @error('pemesan_email')
+                        @error('email_pemesan')
                             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <input type="text" name="pemesan_telpon" placeholder="No. Telepon" required
+                        <input type="text" name="telp_pemesan" placeholder="No. Telepon" required
                             class="w-full p-3 border rounded">
-                        @error('pemesan_telpon')
+                        @error('telp_pemesan')
                             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                         @enderror
                     </div>
