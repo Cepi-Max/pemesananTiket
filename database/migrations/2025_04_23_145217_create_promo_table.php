@@ -17,7 +17,7 @@ class CreatePromoTable extends Migration
             $table->id();
             $table->string('slug')->unique(); // Kolom untuk slug
             $table->string('kode_promo'); // Kolom untuk kode promo
-            $table->decimal('jumlah_%', 5, 2)->nullable(); // Kolom untuk jumlah % (nullable)
+            $table->decimal('jumlah_persen', 5, 2)->nullable(); // Kolom untuk jumlah % (nullable)
             $table->decimal('jumlah_rp', 15, 2)->nullable(); // Kolom untuk jumlah Rp (nullable)
             $table->timestamps();
         });

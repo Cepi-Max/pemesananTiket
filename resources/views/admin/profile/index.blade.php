@@ -1,76 +1,72 @@
 @extends('admin.layouts.main.app')
 
 @section('content')
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-md-2 mt-3">
-                    <a href="{{ route('AboutUs.form', $AboutUs->id ?? '') }}" class="btn btn-dark btn-sm d-flex align-items-center justify-content-center w-80">
-                        <span>{{ isset($AboutUs) ? 'Ubah' : 'Tambah' }} Informasi</span>
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <form action="#">
-                        @foreach (['category', 'author'] as $filter)
-                            @if (request($filter))
-                                <input type="hidden" name="{{ $filter }}" value="{{ request($filter) }}">
-                            @endif
-                        @endforeach
-                        <div class="search-container">
-                            <input type="text" class="search-input" placeholder="cari informasi" id="search" name="search" required autocomplete="off">
-                            <button class="search-button" type="submit">
-                                <i class="fas fa-search"></i>
-                                <span>Cari</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
+@if(session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+</div>
+@endif
     <!-- Tabel Desktop -->
     <div class="card shadow d-none d-md-block">
         <div class="card-header bg-dark text-white">
             <h5 class="card-title mb-0">About Us</h5>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover text-center">
-                    <thead>
-                        <tr>
-                            <th style="width: 5%">No</th>
-                            <th style="width: 15%">Profil</th>
-                            <th style="width: 15%">Visi dan Misi</th>
-                            <th style="width: 15%">Gambar Struktur Organisasi</th>
-                            <th style="width: 15%">Alamat</th>
-                            <th style="width: 15%">Kontak</th>
-                            <th style="width: 10%">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="align-middle">1</td>
-                            <td class="align-middle">{{ \Illuminate\Support\Str::limit($AboutUs->profil, 30) }}</td>
-                            <td class="align-middle">{{ \Illuminate\Support\Str::limit($AboutUs->visi_misi, 30) }}</td>
-                            <td class="align-middle">
-                                @if($AboutUs->gambar_struktur_organisasi && $AboutUs->gambar_struktur_organisasi !== 'default.png')
-                                    <img src="{{ Storage::url('images/publicImg/AboutUs/AboutUsImg/' . $AboutUs->gambar_struktur_organisasi) }}" alt="Struktur Organisasi" width="100">
-                                @else
-                                    <span class="text-muted">No Image</span>
-                                @endif
-                            </td>
-                            <td class="align-middle">{{ $AboutUs->alamat }}</td>
-                            <td class="align-middle">{{ $AboutUs->kontak }}</td>
-                            <td class="align-middle">
-                                <a href="{{ route('AboutUs.form', $AboutUs->id) }}" class="btn btn-warning btn-sm" title="Edit informasi" data-bs-toggle="tooltip">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <form action="{{ route('AboutUs.update', $AboutUs->id) }}" method="post" enctype="multipart/form-data">
+                @csrf
+    
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="profil" class="form-label">Profil</label>
+                        <textarea class="summernote form-control @error('profil') is-invalid @enderror" id="profil" name="profil" rows="5" placeholder="Masukkan Profil">{{ old('profil', $AboutUs->profil ?? '') }}</textarea>
+                        @error('profil')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="visi" class="form-label">Visi</label>
+                        <textarea class="summernote form-control @error('visi') is-invalid @enderror" id="visi" name="visi" rows="5" placeholder="Masukkan Visi">{{ old('visi', $AboutUs->visi ?? '') }}</textarea>
+                        @error('visi')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="misi" class="form-label">Misi</label>
+                        <textarea class="summernote form-control @error('misi') is-invalid @enderror" id="misi" name="misi" rows="5" placeholder="Masukkan Misi">{{ old('misi', $AboutUs->misi ?? '') }}</textarea>
+                        @error('misi')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="alamat" class="form-label">Alamat</label>
+                        <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat', $AboutUs->alamat ?? '') }}" placeholder="Masukkan Alamat">
+                        @error('alamat')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+    
+                    <div class="col-md-6">
+                        <label for="kontak" class="form-label">Kontak</label>
+                        <input type="text" class="form-control @error('kontak') is-invalid @enderror" id="kontak" name="kontak" value="{{ old('kontak', $AboutUs->kontak ?? '') }}" placeholder="Masukkan Kontak">
+                        @error('kontak')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+    
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-dark">Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

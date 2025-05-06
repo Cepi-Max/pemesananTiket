@@ -4,20 +4,12 @@
 <div class="container mt-4">
     <h2 class="mb-4">Edit Promo</h2>
 
-    <form action="{{ route('promo.update', $promo->id) }}" method="POST" class="card p-4 shadow-sm">
+    <form action="{{ route('admin.promo.update', $promo->id) }}" method="POST" class="card p-4 shadow-sm">
         @csrf
-        @method('PUT')
-
         <div class="mb-3">
             <label for="kode_promo" class="form-label">Kode Promo:</label>
             <input type="text" name="kode_promo" id="kode_promo" class="form-control"
                 value="{{ old('kode_promo', $promo->kode_promo) }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="slug" class="form-label">Slug (unique):</label>
-            <input type="text" name="slug" id="slug" class="form-control"
-                value="{{ old('slug', $promo->slug) }}" required>
         </div>
 
         <div class="mb-3">

@@ -8,6 +8,7 @@ use App\Models\Penerbangan;
 use App\Models\User;
 use App\Models\Bandara;
 use App\Models\Pesawat;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class PesanTiketController extends Controller
@@ -108,4 +109,26 @@ class PesanTiketController extends Controller
         $pesanTiket->delete();
         return redirect()->route('pesan_tiket.index')->with('success', 'Pesanan tiket berhasil dihapus.');
     }
+
+
+    
+
+    public function downloadTiket(Request $request)
+    {
+        $kode = $request->kode_booking;
+
+        $pesanan = PesanTiket::with([
+            'penerbangan.pesawat.maskapai',
+            'penerbangan.bandaraAsal',
+            'penerbangan.bandaraTujuan',
+            'detailPenumpangs'
+        ])->where('kode_booking', $kode)->firstOrFail();
+
+        $pdf = Pdf::loadView('pdf.tiket', compact('pesanan'));
+
+        return response($pdf->output(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="Tiket_'.$kode.'.pdf"');
+    }
+
 }

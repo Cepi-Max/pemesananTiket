@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('about_us', function (Blueprint $table) {
             $table->id();
             $table->longText('profil')->nullable();
-            $table->longText('visi_misi')->nullable();
+            $table->longText('visi')->nullable();
+            $table->longText('misi')->nullable();
             $table->string('gambar_struktur_organisasi')->nullable();
             $table->string('alamat')->nullable();
             $table->string('kontak')->nullable();

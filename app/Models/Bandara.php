@@ -16,8 +16,7 @@ class Bandara extends Model
     protected $fillable = [
         'slug', 
         'nama_bandara', 
-        'latitude', 
-        'longitude',
+        'id_kota'
     ];
 
     // Tentukan kolom yang tidak boleh diisi

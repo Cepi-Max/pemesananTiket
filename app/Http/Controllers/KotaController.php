@@ -38,12 +38,8 @@ class KotaController extends Controller
         // Validasi data input
         $request->validate([
             'nama_kota' => 'required',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
         ], [
             'nama_kota.required' => 'nama kota harus diisi.',
-            'latitude.required' => 'lokasi pada peta harus diisi.',
-            'longitude.required' => 'lokasi pada peta harus diisi.',
         ]);
         
         // Buat Slug itu otomatis Fadil
@@ -57,8 +53,6 @@ class KotaController extends Controller
         Kota::create([
             'slug' => $slug,
             'nama_kota' => $request->nama_kota,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
@@ -68,7 +62,7 @@ class KotaController extends Controller
     // Menampilkan form edit kota
     public function edit($slug)
     {
-        $kota = Kota::findOrFail($slug); // Ambil data kota berdasarkan slug
+        $kota = $kota = Kota::where('slug', $slug)->firstOrFail();
 
         $data = [
             'title' => 'Form Edit Kota',
@@ -84,22 +78,16 @@ class KotaController extends Controller
         // Validasi data input
         $request->validate([
             'nama_kota' => 'required',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
         ], [
             'nama_kota.required' => 'nama kota harus diisi.',
-            'latitude.required' => 'lokasi pada peta harus diisi.',
-            'longitude.required' => 'lokasi pada peta harus diisi.',
         ]);
 
-        $kota = Kota::findOrFail($slug); // Ambil data kota berdasarkan slug
+        $kota = Kota::where('slug', $slug)->firstOrFail();
 
         $slug = Str::slug($request->input('nama_kota'));
         $kota->update([
             'slug' => $slug,
             'nama_kota' => $request->nama_kota,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
@@ -109,10 +97,8 @@ class KotaController extends Controller
     // Menghapus kota
     public function destroy($slug)
     {
-        $kota = Kota::findOrFail($slug); // Ambil data kota berdasarkan slug
+        $kota = Kota::where('slug', $slug)->firstOrFail();
         $kota->delete(); // Hapus data kota
-
-        // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('admin.kota.index')->with('success', 'Kota berhasil dihapus.');
     }
 }

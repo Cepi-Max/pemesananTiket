@@ -9,7 +9,7 @@
           Selamat Datang {{ Auth::user()->name }}
         </p>
       </div>
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
         <div class="card">
           <div class="card-header p-2 ps-3">
             <div class="d-flex justify-content-between">
@@ -23,12 +23,9 @@
             </div>
           </div>
           <hr class="dark horizontal my-0">
-          <div class="card-footer p-2 ps-3">
-            <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+55% </span>than last week</p>
-          </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+      <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
         <div class="card">
           <div class="card-header p-2 ps-3">
             <div class="d-flex justify-content-between">
@@ -42,61 +39,49 @@
             </div>
           </div>
           <hr class="dark horizontal my-0">
-          <div class="card-footer p-2 ps-3">
-            <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+3% </span>than last month</p>
-          </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-4 col-md-6 mt-4 mb-4">
-        <div class="card">
+    <div class="row d-flex">
+      <div class="col-lg-6 col-md-6 mt-4 mb-4">
+        <div class="card h-100">
           <div class="card-body">
-            <h6 class="mb-0 ">Penjualan Per Bulan</h6>
-            <p class="text-sm ">Last Campaign Performance</p>
+            <h6 class="mb-0">Penjualan Per Bulan</h6>
             <div class="pe-2">
               <div class="chart">
                 <canvas id="penjualanPerBulanChart" class="chart-canvas" height="170"></canvas>
               </div>
             </div>
             <hr class="dark horizontal">
-            <div class="d-flex ">
-              <i class="material-symbols-rounded text-sm my-auto me-1">schedule</i>
-              <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
-            </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6 mt-4 mb-4">
-        <div class="card ">
+      <div class="col-lg-6 col-md-6 mt-4 mb-4">
+        <div class="card h-100">
           <div class="card-body">
-            <h6 class="mb-0 "> Penjualan Per Penerbangan</h6>
-            <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales. </p>
+            <h6 class="mb-0">Penjualan Per Penerbangan</h6>
             <div class="pe-2">
               <div class="chart">
                 <canvas id="chartPerPenerbangan" class="chart-canvas" height="170"></canvas>
               </div>
             </div>
             <hr class="dark horizontal">
-            <div class="d-flex ">
-              <i class="material-symbols-rounded text-sm my-auto me-1">schedule</i>
-              <p class="mb-0 text-sm"> updated 4 min ago </p>
-            </div>
           </div>
         </div>
       </div>
     </div>
+    
 
     <script>
       // Penjualan per Bulan
       var ctxBulan = document.getElementById('penjualanPerBulanChart').getContext('2d');
       var penjualanPerBulanChart = new Chart(ctxBulan, {
-          type: 'bar', // Pilih chart tipe bar untuk penjualan per bulan
+          type: 'bar',
           data: {
-              labels: @json($penjualanPerBulan->pluck('bulan')), // Menampilkan bulan
+              labels: @json($penjualanPerBulan->pluck('bulan')), 
               datasets: [{
                   label: 'Pendapatan per Bulan',
-                  data: @json($penjualanPerBulan->pluck('pendapatan')), // Menampilkan pendapatan per bulan
+                  data: @json($penjualanPerBulan->pluck('pendapatan')), 
                   backgroundColor: 'rgba(75, 192, 192, 0.2)',
                   borderColor: 'rgba(75, 192, 192, 1)',
                   borderWidth: 1
@@ -125,7 +110,11 @@
               }]
           },
           options: {
-              responsive: true
+              responsive: true,
+              aspectRatio: 1.5,
+        layout: {
+            padding: 20
+        }
           }
       });
 

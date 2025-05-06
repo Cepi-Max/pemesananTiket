@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KelasPesawat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class KelasPesawatController extends Controller
 {
@@ -25,18 +26,25 @@ class KelasPesawatController extends Controller
     {
         // Validasi data input
         $request->validate([
-            'slug' => 'required|unique:kelas_pesawat',
             'nama_kelas' => 'required',
         ]);
 
+        // Tangani Slug
+        $slug = Str::slug($request->input('nama_kelas'));
+        $existingSlugCount = KelasPesawat::where('slug', 'LIKE', "{$slug}%")->count();
+
+        if ($existingSlugCount > 0) {
+            $slug .= '-' . ($existingSlugCount + 1);
+        }
+
         // Simpan data kelas pesawat ke database
         KelasPesawat::create([
-            'slug' => $request->slug,
+            'slug' => $slug,
             'nama_kelas' => $request->nama_kelas,
         ]);
 
         // Redirect ke halaman index dengan pesan sukses
-        return redirect()->route('kelas_pesawat.index')->with('success', 'Kelas pesawat berhasil ditambahkan.');
+        return redirect()->route('admin.kelas_pesawat.index')->with('success', 'Kelas pesawat berhasil ditambahkan.');
     }
 
     // Menampilkan form edit kelas pesawat
@@ -51,13 +59,15 @@ class KelasPesawatController extends Controller
     {
         // Validasi data input
         $request->validate([
-            'slug' => 'required|unique:kelas_pesawat,slug,' . $id,
             'nama_kelas' => 'required',
         ]);
 
-        $kelasPesawat = KelasPesawat::findOrFail($id); // Ambil data kelas pesawat berdasarkan ID
+        $kelasPesawat = KelasPesawat::findOrFail($id); 
+
+        $slug = Str::slug($request->input('nama_kelas'));
+
         $kelasPesawat->update([
-            'slug' => $request->slug,
+            'slug' => $slug,
             'nama_kelas' => $request->nama_kelas,
         ]);
 

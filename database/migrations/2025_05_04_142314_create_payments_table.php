@@ -10,7 +10,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pesan_tiket_id')->constrained('pesan_tikets')->onDelete('cascade'); // Relasi ke pesan_tiket
+            $table->foreignId('pesan_tiket_id')->constrained('pesan_tiket')->onDelete('cascade'); // Relasi ke pesan_tiket
             $table->string('payment_method');
             $table->decimal('amount', 15, 2); // Jumlah pembayaran
             $table->string('payment_status')->default('pending'); // Status pembayaran (default: pending)

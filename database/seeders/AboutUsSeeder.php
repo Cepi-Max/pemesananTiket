@@ -14,7 +14,8 @@ class AboutUsSeeder extends Seeder
     {
         DB::table('about_us')->insert([
             'profil' => 'Travelokan bertugas mengelola, menyimpan, mendokumentasikan, dan memberikan pelayanan tiket kepada manusia agar mempermudah dalam mendapatkan tiket dan mengetahui jadwal penerbangan.',
-            'visi_misi' => 'Visi: Terbentuknya manusia yang menghargai waktu . Misi: 1) mempermudah manusia dalam mendapat tiket pesawat.',
+            'visi' => 'Terbentuknya manusia yang menghargai waktu.',
+            'misi' => '1) mempermudah manusia dalam mendapat tiket pesawat.',
             'gambar_struktur_organisasi' => '1.png',
             'alamat' => 'Jl. Raya Desa Contoh No. 123, Kecamatan Contoh, Kabupaten Contoh, Provinsi Contoh',
             'kontak' => '0812-3456-7890 / email@desacontoh.id',

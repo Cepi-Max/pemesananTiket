@@ -13,7 +13,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('kelas_pesawat.update', $kelasPesawat->id) }}" method="POST">
+            <form action="{{ route('admin.kelas_pesawat.update', $kelasPesawat->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -22,13 +22,8 @@
                     <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" value="{{ old('nama_kelas', $kelasPesawat->nama_kelas) }}" required>
                 </div>
 
-                <div class="mb-3">
-                    <label for="slug" class="form-label">Slug</label>
-                    <input type="text" name="slug" class="form-control" id="slug" value="{{ old('slug', $kelasPesawat->slug) }}" required>
-                </div>
-
-                <button type="submit" class="btn btn-success">Update</button>
-                <a href="{{ route('kelas_pesawat.index') }}" class="btn btn-secondary">Kembali</a>
+                <button type="submit" class="btn btn-dark">Update</button>
+                <a href="{{ route('admin.kelas_pesawat.index') }}" class="btn btn-danger">Kembali</a>
             </form>
         </div>
     </div>

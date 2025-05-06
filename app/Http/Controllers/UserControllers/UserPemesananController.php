@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DetailPenumpang;
 use App\Models\Penerbangan;
 use App\Models\PesanTiket;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +48,7 @@ class UserPemesananController extends Controller
         $kodeBooking = strtoupper(Str::random(8));
 
         $userId = Auth::id() ?? null;
-// dd($request->all());
+
         $pemesanan = DB::transaction(function () use ($request, $penerbangan, $totalHarga, $kodeBooking, $userId) {
             $pesanan = PesanTiket::create([
                 'kode_booking' => $kodeBooking,
@@ -74,9 +75,62 @@ class UserPemesananController extends Controller
                 ]);
             }
 
-            return $pesanan;
+            session(['kode_booking' => $kodeBooking]); // simpan untuk lanjut ke pembayaran
+
+            // return $pesanan;
         });
 
-        return back()->with('success', 'Pemesanan berhasil! Kode Booking Anda: ' . $kodeBooking);
+        return view('user-pages.payment-page', ['totalHarga' => $totalHarga]);
     }
+
+    public function bayar(Request $request)
+    {
+        $request->validate([
+            'kode_booking' => 'required|string|exists:pesan_tiket,kode_booking'
+        ]);
+
+        $pesanan = PesanTiket::where('kode_booking', $request->kode_booking)->firstOrFail();
+
+        // Simulasikan "pembayaran berhasil"
+        $pesanan->status = 'Sudah Dibayar';
+        $pesanan->save();
+
+        return redirect()->route('tiket.jadi', $pesanan->kode_booking);
+    }
+
+    public function tiket($kodeBooking)
+    {
+        $pesanan = PesanTiket::with(['penerbangan.bandaraAsal', 'penerbangan.bandaraTujuan', 'detailPenumpangs'])
+        ->where('kode_booking', $kodeBooking)
+        ->firstOrFail();
+
+        return view('user-pages.tiket-jadi', compact('pesanan'));
+    }
+
+    public function downloadTiket(Request $request)
+    {
+        // Ambil data pemesanan berdasarkan kode_booking
+        $pesanan = PesanTiket::with(['penerbangan.bandaraAsal', 'penerbangan.bandaraTujuan', 'detailPenumpangs'])
+            ->where('kode_booking', $request->kode_booking)
+            ->firstOrFail();
+
+        // Siapkan data untuk view PDF
+        $data = [
+            'kode_booking' => $pesanan->kode_booking,
+            'nama_pemesan' => $pesanan->nama_pemesan,
+            'email_pemesan' => $pesanan->email_pemesan,
+            'telp_pemesan' => $pesanan->telp_pemesan,
+            'status' => $pesanan->status,
+            'penerbangan' => $pesanan->penerbangan,
+            'penumpangs' => $pesanan->detailPenumpangs,
+        ];
+
+        // Generate PDF
+        $pdf = PDF::loadView('user-pages.tiket-pdf', $data);
+
+        // Mengembalikan response PDF sebagai file download
+        return $pdf->download('Tiket_'.$pesanan->kode_booking.'.pdf');
+    }
+
+
 }

@@ -23,7 +23,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('kelas_pesawat.store') }}" method="POST">
+            <form action="{{ route('admin.kelas_pesawat.store') }}" method="POST">
                 @csrf
 
                 <div class="mb-3">
@@ -31,13 +31,8 @@
                     <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" placeholder="Contoh: Ekonomi" value="{{ old('nama_kelas') }}" required>
                 </div>
 
-                <div class="mb-3">
-                    <label for="slug" class="form-label">Slug</label>
-                    <input type="text" name="slug" class="form-control" id="slug" placeholder="Contoh: ekonomi" value="{{ old('slug') }}" required>
-                </div>
-
                 <button type="submit" class="btn btn-dark">Simpan</button>
-                <a href="{{ route('kelas_pesawat.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('admin.kelas_pesawat.index') }}" class="btn btn-danger">Batal</a>
             </form>
         </div>
     </div>

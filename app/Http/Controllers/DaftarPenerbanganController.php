@@ -65,4 +65,5 @@ class DaftarPenerbanganController extends Controller
         // Tampilkan data ke view
         return view('daftar-penerbangan.index', compact('penerbangan'));
     }
+
 }

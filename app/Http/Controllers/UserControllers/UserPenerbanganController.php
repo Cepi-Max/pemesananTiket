@@ -4,6 +4,8 @@ namespace App\Http\Controllers\UserControllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bandara;
+use App\Models\KelasPesawat;
+use App\Models\Maskapai;
 use App\Models\Penerbangan;
 use Illuminate\Http\Request;
 
@@ -41,18 +43,40 @@ class UserPenerbanganController extends Controller
                         $query->where('id_kelas', 'like', "%$namaKelas%");
                     });
             })
-            // ->when($namaKelas, function($query) use ($namaKelas) {
-            //     $query->whereHas('pesawat.kelas', function($query) use ($namaKelas) {
-            //         $query->where('nama_kelas', 'like', "%$namaKelas%");
-            //     });
-            // })
-            ->get();
+            ->paginate(10)
+            ->withQueryString(); 
+
+        $bandaraList = Bandara::all();
+        $maskapaiList = Maskapai::all();
+        $kelasList = KelasPesawat::all(); 
+
+        $bandaraAsalId = null;
+        $bandaraTujuanId = null;
+
+        if ($bandaraAsal) {
+            $bandaraAsalId = Bandara::where('nama_bandara', 'like', "%$bandaraAsal%")->value('id');
+        }
+
+        if ($bandaraTujuan) {
+            $bandaraTujuanId = Bandara::where('nama_bandara', 'like', "%$bandaraTujuan%")->value('id');
+        }
+        
+        if ($namaKelas) {
+            $kelasPesawatId = KelasPesawat::where('nama_kelas', 'like', "%$namaKelas%")->value('id');
+        }
+
 
         // Data yang akan dikirim ke view
         $data = [
             'title' => 'Daftar Penerbangan',
             'penerbangan' => $penerbangan,
+            'bandaraList' => $bandaraList,
+            'maskapaiList' => $maskapaiList,
+            'kelasList' => $kelasList,
+            'selectedBandaraAsal' => $bandaraAsalId,
+            'selectedBandaraTujuan' => $bandaraTujuanId,
         ];
+        
 
         return view('user-pages.daftar-penerbangan', $data);
     }

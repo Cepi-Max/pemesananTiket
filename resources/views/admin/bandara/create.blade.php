@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('bandara.store') }}">
+    <form method="POST" action="{{ route('admin.bandara.store') }}">
         @csrf
 
         <div class="mb-3">
@@ -24,17 +24,21 @@
         </div>
 
         <div class="mb-3">
-            <label for="latitude" class="form-label">Latitude</label>
-            <input type="number" step="any" class="form-control" id="latitude" name="latitude" required>
+            <label for="nama_bandara" class="form-label">Kota Bandara</label>
+            <select name="id_kota" id="id_kota" class="form-control custom-select @error('id_kota') is-invalid @enderror">
+                <option value="" disabled selected>Pilih Kota</option>
+                @foreach ($kota as $k)
+                    <option value="{{ $k->id }}">
+                        {{ $k->nama_kota }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
-        <div class="mb-3">
-            <label for="longitude" class="form-label">Longitude</label>
-            <input type="number" step="any" class="form-control" id="longitude" name="longitude" required>
-        </div>
+       
 
-        <button type="submit" class="btn btn-primary">Simpan</button>
-        <a href="{{ route('bandara.index') }}" class="btn btn-secondary">Batal</a>
+        <button type="submit" class="btn btn-dark">Simpan</button>
+        <a href="{{ route('admin.bandara.index') }}" class="btn btn-danger">Batal</a>
     </form>
 </div>
 @endsection

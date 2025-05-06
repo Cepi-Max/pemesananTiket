@@ -153,7 +153,7 @@
 
 
 @include('admin.layouts.asset.materialUi')
-@include('admin.layouts.asset.msgnotif')
+{{-- @include('admin.layouts.asset.msgnotif') --}}
 
 {{-- <!--   Core JS Files   Error Dropdown-->
 <script src="{{ ('admin/assets/js/core/popper.min.js') }}"></script>

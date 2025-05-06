@@ -41,7 +41,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('kelas_pesawat.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('kelas_pesawat.index') }}">
+          <a class="nav-link {{ request()->routeIs('admin.kelas_pesawat.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.kelas_pesawat.index') }}">
             <i class="material-symbols-rounded opacity-5">flight_class</i>
             <span class="nav-link-text ms-1">Kelas Pesawat</span>
           </a>
@@ -57,7 +57,7 @@
 
           <!-- Promo -->
           <li class="nav-item">
-              <a class="nav-link {{ request()->routeIs('admin.promo.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('promo.index') }}">
+              <a class="nav-link {{ request()->routeIs('admin.promo.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.promo.index') }}">
                   <i class="material-symbols-rounded opacity-5">local_offer</i>
                   <span class="nav-link-text ms-1">Promo</span>
               </a>
@@ -65,7 +65,7 @@
 
           <!-- Penerbangan -->
           <li class="nav-item">
-              <a class="nav-link {{ request()->routeIs('admin.penerbangan.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('penerbangan.index') }}">
+              <a class="nav-link {{ request()->routeIs('admin.penerbangan.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.penerbangan.index') }}">
                   <i class="material-symbols-rounded opacity-5">flight</i>
                   <span class="nav-link-text ms-1">Penerbangan</span>
               </a>
@@ -73,7 +73,7 @@
 
           <!-- Bandara -->
           <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('admin.bandara.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('bandara.index') }}">
+            <a class="nav-link {{ request()->routeIs('admin.bandara.*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('admin.bandara.index') }}">
                 <i class="material-symbols-rounded opacity-5">airport_shuttle</i>
                 <span class="nav-link-text ms-1">Bandara</span>
             </a>
@@ -118,7 +118,7 @@
         </li> --}}
 
         <li class="nav-item">
-          <a class="nav-link text-dark" {{ request()->routeIs('show.profile'. '*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('show.profile') }}">
+          <a class="nav-link text-dark {{ request()->routeIs('show.profile'. '*') ? 'active bg-gradient-dark text-white' : 'text-dark' }}" href="{{ route('show.profile') }}">
             <i class="material-symbols-rounded opacity-5">person</i>
             <span class="nav-link-text ms-1 ">About US</span>
           </a>

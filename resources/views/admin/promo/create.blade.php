@@ -4,17 +4,12 @@
 <div class="container mt-4">
     <h2 class="mb-4">Tambah Promo</h2>
 
-    <form action="{{ route('promo.store') }}" method="POST" class="card p-4 shadow-sm">
+    <form action="{{ route('admin.promo.store') }}" method="POST" class="card p-4 shadow-sm">
         @csrf
 
         <div class="mb-3">
             <label for="kode_promo" class="form-label">Kode Promo:</label>
             <input type="text" name="kode_promo" id="kode_promo" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="slug" class="form-label">Slug (unique):</label>
-            <input type="text" name="slug" id="slug" class="form-control" required>
         </div>
 
         <div class="mb-3">
@@ -27,7 +22,7 @@
             <input type="number" id="jumlah_rp" name="jumlah_rp" min="0" step="0.01" class="form-control">
         </div>
 
-        <button type="submit" class="btn btn-success">Simpan</button>
+        <button type="submit" class="btn btn-dark">Simpan</button>
     </form>
 </div>
 
